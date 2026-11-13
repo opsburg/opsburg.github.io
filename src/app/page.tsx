@@ -1,5 +1,5 @@
 import { Bot, Cog, Map, ServerCog, ShieldCheck, Siren, Users } from "lucide-react";
-import SkyCity from "@/components/SkyCity";
+import HeroScene from "@/components/HeroScene";
 import { CITY, DESCRIPTION, FORCES, GITHUB_URL, POWER } from "@/lib/site";
 
 const STOPS = [
@@ -46,28 +46,44 @@ const STEPS = [
 export default function Home() {
   return (
     <div>
-      {/* Hero */}
-      <section className="max-w-6xl mx-auto px-4 pt-16 pb-10 grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <p className="text-copper uppercase tracking-[0.25em] text-xs font-semibold">Business continuity, played as a city</p>
-          <h1 className="font-display text-4xl sm:text-5xl font-bold leading-tight mt-4">
-            When the giants stumble, your city <span className="brass-text">keeps flying</span>.
-          </h1>
-          <p className="text-ink text-lg mt-6 max-w-xl">{DESCRIPTION}</p>
-          <div className="flex flex-wrap gap-3 mt-8">
-            <a
-              href={GITHUB_URL}
-              className="px-5 py-2.5 rounded-md font-semibold text-sky-deep bg-gradient-to-r from-[#f1d27a] via-brass to-copper hover:brightness-110"
-            >
-              Follow the build on GitHub
-            </a>
-            <a href="#risk" className="px-5 py-2.5 rounded-md brass-border hover:bg-brass/10">
-              See the risk
-            </a>
+      {/* Hero: full screen, the 3D city behind the headline */}
+      <section className="relative -mt-16 h-[100svh] min-h-[600px] overflow-hidden bg-sky-deep">
+        <HeroScene />
+        {/* Scrims keep the headline readable over the scene */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sky-deep/90 via-sky-deep/50 to-transparent md:bg-gradient-to-r md:from-sky-deep/90 md:via-sky-deep/45 md:via-30% md:to-transparent md:to-55%" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-sky" />
+        <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-24 pt-24 md:justify-center md:pb-16">
+          <div className="max-w-xl">
+            <p className="text-copper uppercase tracking-[0.25em] text-xs font-semibold">Business continuity, played as a city</p>
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] mt-4">
+              When the giants stumble, your city <span className="brass-text">keeps flying</span>.
+            </h1>
+            <p className="text-ink text-lg mt-6">{DESCRIPTION}</p>
+            <div className="flex flex-wrap gap-3 mt-8">
+              <a
+                href={GITHUB_URL}
+                className="px-5 py-2.5 rounded-md font-semibold text-sky-deep bg-gradient-to-r from-[#f1d27a] via-brass to-copper hover:brightness-110"
+              >
+                Follow the build on GitHub
+              </a>
+              <a href="#risk" className="px-5 py-2.5 rounded-md brass-border bg-sky-deep/40 hover:bg-brass/10">
+                See the risk
+              </a>
+            </div>
+            <p className="text-sm text-ink/80 mt-4">In the workshop. Not playable yet.</p>
           </div>
-          <p className="text-sm text-ink/70 mt-4">In the workshop. Not playable yet.</p>
         </div>
-        <SkyCity />
+        <p className="sr-only">
+          Animated scene: a steampunk city floats over the clouds, wired to three foreign power plants. One plant goes dark,
+          its line dies, the city&apos;s own brass engines flare up and a copper reserve line takes the load. The city keeps
+          flying.
+        </p>
+        <a
+          href="#risk"
+          className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-xs uppercase tracking-[0.25em] text-ink/80 hover:text-cream"
+        >
+          Scroll
+        </a>
       </section>
 
       {/* The risk */}
