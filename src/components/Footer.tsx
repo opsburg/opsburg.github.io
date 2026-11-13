@@ -9,7 +9,9 @@ export default function Footer() {
           <p className="font-display text-lg brass-text">{SITE_NAME}</p>
           <p className="mt-1">{TAGLINE}</p>
         </div>
-        <div className="flex gap-5 items-start">
+        <div className="flex flex-wrap gap-5 items-start">
+          <Link href="/gamified-devops" className="hover:text-cream">Why a game</Link>
+          <Link href="/vibe-coding" className="hover:text-cream">Vibe coding</Link>
           <Link href="/faq" className="hover:text-cream">FAQ</Link>
           <a href={GITHUB_URL} className="hover:text-cream">GitHub</a>
         </div>

@@ -25,6 +25,9 @@ Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and
 
 - `src/lib/site.ts`: name, URLs, tagline and the map from city buildings to real infrastructure
 - `src/app/page.tsx`: home page
+- `src/app/gamified-devops/page.tsx`: why gamified DevOps, with the streak scene (`src/components/StreakScene.tsx`)
+- `src/app/vibe-coding/page.tsx`: vibe coding for everyone, governed, with the workshop scene (`src/components/WorkshopScene.tsx`)
 - `src/app/faq/page.tsx`: FAQ
-- `src/components/SkyCity.tsx`: the hero illustration
+- `src/components/HeroScene.tsx`: the 3D home hero; `src/components/scene/`: the pieces the page scenes share
+- `src/components/SkyCity.tsx`: the SVG city, used when WebGL is missing
 - `public/logo.png`, `src/app/icon.png`, `src/app/apple-icon.png`: the logo (generated with Gemini)

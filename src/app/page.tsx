@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Anchor, CloudLightning, Flame, Map, Ship, Target, Trophy, Wrench } from "lucide-react";
 import HeroScene from "@/components/HeroScene";
 import { CITY, DESCRIPTION, FORCES, GAME, GITHUB_URL, PLATFORM } from "@/lib/site";
@@ -75,7 +76,11 @@ export default function Home() {
         <h2 className="font-display text-3xl font-bold">Build, ship and run, in one place</h2>
         <p className="text-ink mt-3 max-w-2xl">
           Under the brass, Opsburg is a real platform for your apps and AI agents: your repositories, your pipelines, your
-          Kubernetes.
+          Kubernetes. Developers use it, and so can everyone else:{" "}
+          <Link href="/vibe-coding" className="text-brass underline underline-offset-4 hover:text-cream">
+            vibe coding for everyone, governed
+          </Link>
+          .
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
           {PLATFORM.map((item) => (
@@ -93,7 +98,11 @@ export default function Home() {
         <h2 className="font-display text-3xl font-bold">Keeping it up is the game</h2>
         <p className="text-ink mt-3 max-w-2xl">
           Running a cloud is a hundred small chores and a few bad nights. Opsburg turns them into a city your team wants to
-          look after.
+          look after.{" "}
+          <Link href="/gamified-devops" className="text-brass underline underline-offset-4 hover:text-cream">
+            Why a game works
+          </Link>
+          .
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
           {GAME.map((item, index) => {

@@ -20,6 +20,14 @@ const FAQS = [
     a: "Because keeping a cloud up is a lot of small chores and a few bad nights. Streaks, missions and storm drills make the chores visible and the team faster when a real storm comes.",
   },
   {
+    q: "Isn't gamification just badges and leaderboards?",
+    a: "Not here. The streak belongs to the team, nobody is ranked or blamed, and the city grows with outcomes like uptime and patched services, not with commits. More on the Why a game page.",
+  },
+  {
+    q: "Can people who don't write code build apps with it?",
+    a: "Yes, that is the idea: describe the app and AI agents build it from a template your platform team approved, through tests, security checks and a human approval before production. More on the Vibe coding page.",
+  },
+  {
     q: "Is it a simulation?",
     a: "No. When you place a factory, a real service is created. When an airship takes off, a real version is built and deployed. The game is the interface, the infrastructure is yours.",
   },
