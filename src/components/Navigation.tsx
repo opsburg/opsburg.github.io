@@ -11,8 +11,8 @@ export default function Navigation() {
           {SITE_NAME}
         </Link>
         <div className="flex items-center gap-5 text-sm text-ink">
-          <Link href="/#city" className="hover:text-cream hidden sm:inline">The city</Link>
-          <Link href="/#how" className="hover:text-cream hidden sm:inline">How it works</Link>
+          <Link href="/#risk" className="hover:text-cream hidden sm:inline">The risk</Link>
+          <Link href="/#power" className="hover:text-cream hidden sm:inline">Power lines</Link>
           <Link href="/faq" className="hover:text-cream">FAQ</Link>
           <a href={GITHUB_URL} className="px-3 py-1.5 rounded-md brass-border text-cream hover:bg-brass/10">
             GitHub

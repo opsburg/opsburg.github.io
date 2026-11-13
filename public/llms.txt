@@ -1,6 +1,15 @@
 # Opsburg
 
-> Opsburg is a steampunk city builder for DevOps, SRE and platform engineers. Every building in your flying city is a real piece of infrastructure, every airship is a real deploy, and every storm is a real incident.
+> When the giants stumble, your city keeps flying. Work done by people and by AI agents now runs on a handful of US clouds and AI models, and one hiccup on their side stops everything. Opsburg is a city builder for the teams who keep a company running: every building is real infrastructure, wired to the provider it depends on, and the game is making sure no single giant can ground the city.
+
+## Power
+
+- Foreign power plants: US cloud and AI providers
+- Blackout: a provider outage; people and agents stop
+- Own engines: infrastructure you control (your servers, a European cloud, a self-hosted open model)
+- Reserve lines: failover to a second source
+
+## The city
 
 - Clocktower: control plane
 - Boiler House: compute node
@@ -9,7 +18,7 @@
 - Telegraph: message queue
 - Observatory: monitoring
 - Lightning Spire: firewall
-- Airship: deploy
+- Automaton: AI agent
 - Storm: incident; pressure: load; coal: cost
 
 Status: in development, not playable yet.

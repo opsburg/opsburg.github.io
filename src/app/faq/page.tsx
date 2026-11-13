@@ -2,26 +2,30 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Questions about Opsburg, the steampunk city builder where every building is real infrastructure.",
+  description: "Questions about Opsburg, the city builder that keeps your company's people and agents working when a cloud or AI giant goes down.",
   alternates: { canonical: "/faq" },
 };
 
 const FAQS = [
   {
     q: "What is Opsburg?",
-    a: "A city builder for DevOps, SRE and platform engineers. You grow a flying steampunk city, and every building, airship and storm maps to a real piece of your infrastructure: services, deploys, incidents.",
+    a: "A city builder for the teams who keep a company running. Your flying city is your real stack: every building is a service, a server or an AI agent, wired to the providers it depends on. The game is keeping the city in the air when one of those providers fails.",
+  },
+  {
+    q: "What problem does it solve?",
+    a: "Work done by people and by AI agents now depends on a few US clouds and AI models. When one of them has an outage, processes stop and nobody inside the company can fix it. Opsburg makes those dependencies visible and helps you build alternatives you control.",
+  },
+  {
+    q: "Is it against US providers?",
+    a: "No. It is against depending on any single provider you cannot control. A US cloud behind a European one and a self-hosted model is a strong city; any single source with nothing behind it is a weak one.",
   },
   {
     q: "Is it a simulation?",
-    a: "No. When you place a factory, a real service is created. When an airship takes off, a real version is built and deployed. The game is the interface, the infrastructure is yours.",
-  },
-  {
-    q: "What does it connect to?",
-    a: "GitHub, GitLab and Azure DevOps for code and pipelines, Argo CD and Kubernetes for deploys, and the major AI model providers for the automatons.",
+    a: "No. The buildings are your real services and servers, and the moves you make in the game are actions on them. A rehearsed blackout cuts a real dependency in a controlled way.",
   },
   {
     q: "Who are the automatons?",
-    a: "AI agents that work for your city. They read logs, propose fixes and repair damage after a storm. Anything that touches production waits for your approval.",
+    a: "AI agents that work for your city. They read logs, propose fixes and repair damage after a storm. They can run on more than one model, including one you host yourself, and anything that touches production waits for your approval.",
   },
   {
     q: "Can I play it today?",

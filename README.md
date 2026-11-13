@@ -2,7 +2,7 @@
 
 # Opsburg website
 
-Source of [opsburg.github.io](https://opsburg.github.io), the public site of Opsburg, the steampunk city builder for DevOps, SRE and platform engineers. Next.js 15 static export, Tailwind v4, React 19.
+Source of [opsburg.github.io](https://opsburg.github.io), the public site of Opsburg, the city builder that keeps a company's people and AI agents working when a cloud or AI giant goes down. Next.js 15 static export, Tailwind v4, React 19.
 
 ## Develop
 
