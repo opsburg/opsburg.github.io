@@ -12,14 +12,14 @@
 ## The game
 
 - Uptime streaks, missions for real chores, storm drills, a city that grows with your platform
-- Why: keeping a cloud up is invisible work. A city makes it visible, missions break chores into steps, drills make recovery practice safe. The streak belongs to the team: no ranking of people, no points for busywork. Details: https://opsburg.github.io/gamified-devops
+- Why: keeping a cloud up is invisible work. A city makes it visible, missions break chores into steps, drills make recovery practice safe. The streak belongs to the team: no ranking of people, no points for busywork. Details: https://opsburg.dev/gamified-devops
 
 ## Vibe coding, governed
 
 - Anyone can describe an app or agent and AI agents build it, from a template the platform team approved
 - Every change passes tests, security scans and policies; production waits for a human approval
 - Deployed through GitOps to your Kubernetes, behind your single sign-on, with your AI models and cost limits
-- Details: https://opsburg.github.io/vibe-coding
+- Details: https://opsburg.dev/vibe-coding
 
 ## The city
 
@@ -37,9 +37,9 @@ Status: in development, not playable yet.
 
 ## Links
 
-- Home: https://opsburg.github.io/
-- Why gamified DevOps: https://opsburg.github.io/gamified-devops
-- Vibe coding, governed: https://opsburg.github.io/vibe-coding
-- FAQ: https://opsburg.github.io/faq
-- Design system: https://opsburg.github.io/design-system/
+- Home: https://opsburg.dev/
+- Why gamified DevOps: https://opsburg.dev/gamified-devops
+- Vibe coding, governed: https://opsburg.dev/vibe-coding
+- FAQ: https://opsburg.dev/faq
+- Design system: https://opsburg.dev/design-system/
 - GitHub: https://github.com/opsburg

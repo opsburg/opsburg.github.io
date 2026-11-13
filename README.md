@@ -2,7 +2,7 @@
 
 # Opsburg website
 
-Source of [opsburg.github.io](https://opsburg.github.io), the public site of Opsburg, the platform that builds and ships your apps and AI agents and turns keeping your cloud up into a city-builder game. Next.js 15 static export, Tailwind v4, React 19.
+Source of [opsburg.dev](https://opsburg.dev), the public site of Opsburg, the platform that builds and ships your apps and AI agents and turns keeping your cloud up into a city-builder game. Next.js 15 static export, Tailwind v4, React 19.
 
 ## Develop
 

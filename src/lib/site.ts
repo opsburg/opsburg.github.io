@@ -1,5 +1,5 @@
 export const SITE_NAME = "Opsburg";
-export const SITE_URL = "https://opsburg.github.io";
+export const SITE_URL = "https://opsburg.dev";
 export const GITHUB_URL = "https://github.com/opsburg";
 
 export const TAGLINE = "Keep your cloud up and running. Play it like a city.";
