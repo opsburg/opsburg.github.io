@@ -3,14 +3,15 @@
 
 /* Steampunk in the cloud: a deep evening sky, brass and copper, cream paper. */
 @theme {
-  --color-sky: #0f1c2e;
-  --color-sky-deep: #0a1320;
-  --color-sky-high: #1d3352;
-  --color-brass: #c9a227;
-  --color-copper: #b87333;
+  /* Palette "Ottone e Notte", the same values as @opsburg/design-system */
+  --color-sky: #0a1e35;
+  --color-sky-deep: #071629;
+  --color-sky-high: #11294a;
+  --color-brass: #c9952a;
+  --color-copper: #b4642e;
   --color-steam: #e8e1d3;
-  --color-cream: #f4ecd8;
-  --color-ink: #b9c3cf;
+  --color-cream: #f6ecd3;
+  --color-ink: #c9d1db;
 
   --font-display: "Cinzel", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
