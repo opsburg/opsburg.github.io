@@ -1,0 +1,21 @@
+# Opsburg
+
+> Opsburg is a steampunk city builder for DevOps, SRE and platform engineers. Every building in your flying city is a real piece of infrastructure, every airship is a real deploy, and every storm is a real incident.
+
+- Clocktower: control plane
+- Boiler House: compute node
+- Factory: service
+- Vault: database
+- Telegraph: message queue
+- Observatory: monitoring
+- Lightning Spire: firewall
+- Airship: deploy
+- Storm: incident; pressure: load; coal: cost
+
+Status: in development, not playable yet.
+
+## Links
+
+- Home: https://opsburg.github.io/
+- FAQ: https://opsburg.github.io/faq
+- GitHub: https://github.com/opsburg
