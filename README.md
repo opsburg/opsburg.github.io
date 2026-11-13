@@ -1,4 +1,4 @@
-<p align="center"><img src="public/icon.svg" alt="Opsburg" width="96"></p>
+<p align="center"><img src="public/logo.png" alt="Opsburg" width="96"></p>
 
 # Opsburg website
 
@@ -27,4 +27,4 @@ Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and
 - `src/app/page.tsx`: home page
 - `src/app/faq/page.tsx`: FAQ
 - `src/components/SkyCity.tsx`: the hero illustration
-- `public/icon.svg`: the logo
+- `public/logo.png`, `src/app/icon.png`, `src/app/apple-icon.png`: the logo (generated with Gemini)

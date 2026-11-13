@@ -27,7 +27,6 @@ export const metadata: Metadata = {
     "Kubernetes",
     "incident response",
   ],
-  icons: { icon: "/icon.svg" },
   openGraph: {
     title: `${SITE_NAME} · ${TAGLINE}`,
     description: DESCRIPTION,

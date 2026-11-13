@@ -7,7 +7,7 @@ export default function Navigation() {
       <nav className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-display text-xl font-bold brass-text">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icon.svg" alt="" width={28} height={28} />
+          <img src="/logo.png" alt="" width={32} height={32} />
           {SITE_NAME}
         </Link>
         <div className="flex items-center gap-5 text-sm text-ink">
