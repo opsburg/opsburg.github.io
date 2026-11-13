@@ -2,31 +2,31 @@ export const SITE_NAME = "Opsburg";
 export const SITE_URL = "https://opsburg.github.io";
 export const GITHUB_URL = "https://github.com/opsburg";
 
-export const TAGLINE = "When the giants stumble, your city keeps flying.";
+export const TAGLINE = "Keep your cloud up and running. Play it like a city.";
 export const DESCRIPTION =
-  "Your company's work, done by people and by AI agents, now runs on a handful of US clouds and AI models. One hiccup on their side and everything stops. Opsburg is a city builder for the teams who keep it running: every building is real infrastructure, and the game is making sure no single giant can ground your city.";
+  "Opsburg builds and ships your apps and AI agents, from the repository to your Kubernetes. Then it turns running them into a game: every service is a building, every deploy an airship, every incident a storm. Your team keeps the city flying, and your cloud stays up.";
 
-/** The dependency the whole game is about: where the city gets its power. */
-export const POWER = [
+/** What the platform does, before any game. */
+export const PLATFORM = [
   {
-    name: "Foreign power plants",
-    real: "US cloud and AI providers",
-    text: "Cheap, strong, and not yours. Most of your city draws from two or three of them.",
+    name: "Build",
+    real: "Apps and AI agents from templates",
+    text: "Describe the service or the agent you need. Opsburg creates the repository on GitHub, GitLab or Azure DevOps, from a proven template, CI included.",
   },
   {
-    name: "Blackout",
-    real: "A provider outage",
-    text: "A region goes down, a model is rate-limited, a login service fails. People stop. Agents stop. Nobody on your side can fix it.",
+    name: "Ship",
+    real: "One click to your Kubernetes",
+    text: "A tag builds the image and registers the version. One click deploys it through GitOps and Argo CD, in every environment, with rollback.",
   },
   {
-    name: "Own engines",
-    real: "Infrastructure you control",
-    text: "Your servers, a European cloud, an open model you run yourself. Slower to build, impossible to switch off from outside.",
+    name: "Run",
+    real: "Logs, health, AI that helps",
+    text: "Live state, logs and incidents for every service. AI agents read the logs, propose the fix and wait for your approval before touching production.",
   },
   {
-    name: "Reserve lines",
-    real: "Failover",
-    text: "A second source behind every building that matters, ready to take the load when the first one goes dark.",
+    name: "Your rules",
+    real: "SSO, roles, your models",
+    text: "Your single sign-on, your roles, your AI models, your cloud. Self-host it, or connect it to your AI client through MCP.",
   },
 ] as const;
 
@@ -36,14 +36,34 @@ export const CITY = [
   { building: "Boiler House", real: "Compute node", text: "Burns coal, makes steam. More boilers, more capacity." },
   { building: "Factory", real: "Service", text: "Where the actual work gets done, one assembly line per app." },
   { building: "Vault", real: "Database", text: "Thick walls, heavy doors. What goes in must come back out." },
-  { building: "Telegraph", real: "Message queue", text: "Messages hop from tower to tower, even when the line is busy." },
+  { building: "Telegraph", real: "Message queue and logs", text: "Messages hop from tower to tower, and every one leaves a line on the tape." },
   { building: "Observatory", real: "Monitoring", text: "Watches the sky so you see the storm before it hits." },
-  { building: "Lightning Spire", real: "Firewall", text: "Takes the strike so the rest of the city does not." },
-  { building: "Automaton", real: "AI agent", text: "Works day and night, as long as its power plant answers." },
+  { building: "Airship", real: "Deploy", text: "Carries a new version from the shipyard to every island." },
+  { building: "Automaton", real: "AI agent", text: "Flies out to repair what a storm broke, and asks before it touches production." },
 ] as const;
 
 export const FORCES = [
-  { name: "Storms", real: "Incidents", text: "They roll in without warning. Your automatons fly out to repair the damage." },
+  { name: "Storms", real: "Incidents", text: "They roll in without warning. Weather them fast and the city keeps its streak." },
   { name: "Pressure", real: "Load", text: "Too much steam in the pipes and something bursts. Too little and the city stalls." },
   { name: "Coal", real: "Cost", text: "Every boiler burns it. A good mayor knows where every lump goes." },
+] as const;
+
+/** The game: what makes keeping the cloud up something a team wants to do. */
+export const GAME = [
+  {
+    name: "Uptime streaks",
+    text: "Every day the city stays in the air adds to the streak. A storm you weather fast keeps it alive.",
+  },
+  {
+    name: "Missions",
+    text: "Real chores turned into missions: patch the vaults, retire the old airships, add a reserve boiler before the season of storms.",
+  },
+  {
+    name: "Storm drills",
+    text: "Rehearse an incident on purpose and see who repairs it first. Better drills, shorter real storms.",
+  },
+  {
+    name: "A city that grows",
+    text: "Every service, environment and team adds a building. The city is the picture of your platform, for everyone to see.",
+  },
 ] as const;

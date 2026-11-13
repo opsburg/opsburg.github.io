@@ -2,30 +2,34 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Questions about Opsburg, the city builder that keeps your company's people and agents working when a cloud or AI giant goes down.",
+  description: "Questions about Opsburg, the platform that builds and ships your apps and AI agents and turns keeping your cloud up into a game.",
   alternates: { canonical: "/faq" },
 };
 
 const FAQS = [
   {
     q: "What is Opsburg?",
-    a: "A city builder for the teams who keep a company running. Your flying city is your real stack: every building is a service, a server or an AI agent, wired to the providers it depends on. The game is keeping the city in the air when one of those providers fails.",
+    a: "A platform that builds and ships your apps and AI agents, from the repository to your Kubernetes, with a game on top: your stack is a flying city, and keeping it up and running is how you play.",
   },
   {
-    q: "What problem does it solve?",
-    a: "Work done by people and by AI agents now depends on a few US clouds and AI models. When one of them has an outage, processes stop and nobody inside the company can fix it. Opsburg makes those dependencies visible and helps you build alternatives you control.",
+    q: "What does it actually do?",
+    a: "It creates repositories from templates on GitHub, GitLab or Azure DevOps with CI included, registers every version you build, deploys it through GitOps and Argo CD to your environments, and shows live state, logs and incidents. AI agents help read logs and propose fixes.",
   },
   {
-    q: "Is it against US providers?",
-    a: "No. It is against depending on any single provider you cannot control. A US cloud behind a European one and a self-hosted model is a strong city; any single source with nothing behind it is a weak one.",
+    q: "Why a game?",
+    a: "Because keeping a cloud up is a lot of small chores and a few bad nights. Streaks, missions and storm drills make the chores visible and the team faster when a real storm comes.",
   },
   {
     q: "Is it a simulation?",
-    a: "No. The buildings are your real services and servers, and the moves you make in the game are actions on them. A rehearsed blackout cuts a real dependency in a controlled way.",
+    a: "No. When you place a factory, a real service is created. When an airship takes off, a real version is built and deployed. The game is the interface, the infrastructure is yours.",
   },
   {
     q: "Who are the automatons?",
-    a: "AI agents that work for your city. They read logs, propose fixes and repair damage after a storm. They can run on more than one model, including one you host yourself, and anything that touches production waits for your approval.",
+    a: "AI agents that work for your city. They read logs, propose fixes and repair damage after a storm, on the AI models you choose. Anything that touches production waits for your approval.",
+  },
+  {
+    q: "Can I host it myself?",
+    a: "Yes, that is the plan: one container, or a Helm chart on your Kubernetes, with your single sign-on.",
   },
   {
     q: "Can I play it today?",

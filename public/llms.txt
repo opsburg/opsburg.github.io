@@ -1,13 +1,17 @@
 # Opsburg
 
-> When the giants stumble, your city keeps flying. Work done by people and by AI agents now runs on a handful of US clouds and AI models, and one hiccup on their side stops everything. Opsburg is a city builder for the teams who keep a company running: every building is real infrastructure, wired to the provider it depends on, and the game is making sure no single giant can ground the city.
+> Keep your cloud up and running. Play it like a city. Opsburg builds and ships your apps and AI agents, from the repository to your Kubernetes, and turns running them into a game: every service is a building, every deploy an airship, every incident a storm.
 
-## Power
+## The platform
 
-- Foreign power plants: US cloud and AI providers
-- Blackout: a provider outage; people and agents stop
-- Own engines: infrastructure you control (your servers, a European cloud, a self-hosted open model)
-- Reserve lines: failover to a second source
+- Build: apps and AI agents from templates, with repositories on GitHub, GitLab or Azure DevOps and CI included
+- Ship: a tag builds and registers the version; one click deploys it through GitOps and Argo CD, with rollback
+- Run: live state, logs and incidents; AI agents read logs and propose fixes, waiting for approval before touching production
+- Your rules: single sign-on, roles, your AI models, self-hosted, MCP server for AI clients
+
+## The game
+
+- Uptime streaks, missions for real chores, storm drills, a city that grows with your platform
 
 ## The city
 
@@ -15,9 +19,9 @@
 - Boiler House: compute node
 - Factory: service
 - Vault: database
-- Telegraph: message queue
+- Telegraph: message queue and logs
 - Observatory: monitoring
-- Lightning Spire: firewall
+- Airship: deploy
 - Automaton: AI agent
 - Storm: incident; pressure: load; coal: cost
 
@@ -27,4 +31,5 @@ Status: in development, not playable yet.
 
 - Home: https://opsburg.github.io/
 - FAQ: https://opsburg.github.io/faq
+- Design system: https://opsburg.github.io/design-system/
 - GitHub: https://github.com/opsburg

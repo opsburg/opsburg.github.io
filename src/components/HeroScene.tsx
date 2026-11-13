@@ -6,9 +6,9 @@ import SkyCity from "./SkyCity";
 
 /*
  * The hero: Opsburg at night, floating over a sea of clouds.
- * Three foreign power plants feed the city through glowing lines. Every few seconds one of them
- * stutters and goes dark; its line dies, the city's own brass engines flare up, a copper reserve
- * line takes the load, and the city keeps flying. Plain three.js, no post-processing.
+ * Every ten seconds a storm rolls in and lightning strikes a boiler house: its windows go dark and a red
+ * lamp blinks. A brass automaton flies out of the clocktower, repairs it with a shower of sparks, the
+ * lights come back and the lamp turns green. The city keeps flying. Plain three.js, no post-processing.
  */
 
 const COLORS = {
@@ -158,11 +158,11 @@ function buildScene(container: HTMLDivElement, reducedMotion: boolean): Cleanup 
   };
 
   const box = (w: number, h: number, d: number, material: THREE.Material) => new THREE.Mesh(track(new THREE.BoxGeometry(w, h, d)), material);
-  const windowsOn = (target: THREE.Object3D, w: number, h: number, d: number, rows: number, cols: number) => {
+  const windowsOn = (target: THREE.Object3D, w: number, h: number, d: number, rows: number, cols: number, material: THREE.Material = windowMat) => {
     const geo = track(new THREE.PlaneGeometry(0.22, 0.3));
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        const pane = new THREE.Mesh(geo, windowMat);
+        const pane = new THREE.Mesh(geo, material);
         pane.position.set(-w / 2 + (w / (cols + 1)) * (c + 1), -h / 2 + (h / (rows + 1)) * (r + 1), d / 2 + 0.01);
         target.add(pane);
       }
@@ -194,10 +194,12 @@ function buildScene(container: HTMLDivElement, reducedMotion: boolean): Cleanup 
   // Boiler houses: the city's own engines, with chimneys and steam
   const engines: THREE.MeshStandardMaterial[] = [];
   const chimneyTops: THREE.Vector3[] = [];
-  const boiler = (x: number, z: number) => {
+  // The second boiler is the one the storm strikes: its windows and engine can go dark
+  const struckWindowMat = track(new THREE.MeshBasicMaterial({ color: COLORS.window }));
+  const boiler = (x: number, z: number, struck = false) => {
     const house = box(2.2, 1.8, 1.8, wallMat);
     house.position.set(x, 1.4, z);
-    windowsOn(house, 2.2, 1.8, 1.8, 1, 3);
+    windowsOn(house, 2.2, 1.8, 1.8, 1, 3, struck ? struckWindowMat : windowMat);
     const engineMat = mat({ color: COLORS.brass, emissive: COLORS.copper, emissiveIntensity: 0.4, metalness: 0.7, roughness: 0.35 });
     engines.push(engineMat);
     const tank = new THREE.Mesh(track(new THREE.CylinderGeometry(0.55, 0.55, 1.6, 12)), engineMat);
@@ -212,7 +214,8 @@ function buildScene(container: HTMLDivElement, reducedMotion: boolean): Cleanup 
     }
   };
   boiler(-3.2, 1.2);
-  boiler(3.1, 1.6);
+  boiler(3.1, 1.6, true);
+  const struckEngine = engines[1];
 
   // Factory with a sawtooth roof, and a brass vault dome
   const factory = box(2.6, 1.5, 1.6, wallMat);
@@ -285,49 +288,73 @@ function buildScene(container: HTMLDivElement, reducedMotion: boolean): Cleanup 
   airship.scale.setScalar(0.85);
   scene.add(airship);
 
-  // ---------- foreign power plants and their lines ----------
-  // They follow the city's place on screen, but not its bobbing and swaying
-  const anchor = new THREE.Group();
-  scene.add(anchor);
-  // Behind and to the right of the city, never behind the headline
-  const plantPositions = [new THREE.Vector3(-3, 0, -58), new THREE.Vector3(18, 3, -72), new THREE.Vector3(40, 0, -56)];
-  const plants = plantPositions.map((pos) => {
-    const group = new THREE.Group();
-    const profile = [new THREE.Vector2(4.2, 0), new THREE.Vector2(3.1, 5), new THREE.Vector2(2.6, 9), new THREE.Vector2(3.2, 13)];
-    const tower = new THREE.Mesh(track(new THREE.LatheGeometry(profile, 18)), mat({ color: COLORS.plant, roughness: 0.9 }));
-    const glowMat = mat({ color: COLORS.foreign, emissive: COLORS.foreign, emissiveIntensity: 2 });
-    const ring = new THREE.Mesh(track(new THREE.TorusGeometry(3.2, 0.18, 6, 24)), glowMat);
-    ring.rotation.x = Math.PI / 2;
-    ring.position.y = 13;
-    const beacon = new THREE.Mesh(track(new THREE.SphereGeometry(0.35, 8, 6)), mat({ color: 0xff5a4a, emissive: 0xff5a4a, emissiveIntensity: 2 }));
-    beacon.position.y = 13.6;
-    const platform = new THREE.Mesh(track(new THREE.CylinderGeometry(6, 5, 1.2, 10)), rockMat);
-    platform.position.y = -0.6;
-    group.add(platform, tower, ring, beacon);
-    group.position.copy(pos);
-    anchor.add(group);
+  // ---------- the storm and the automaton ----------
+  const STRIKE = new THREE.Vector3(3.1, 3.2, 1.6); // the struck boiler's roof, in city coordinates
+  const HOME = new THREE.Vector3(0, 8.6, 0.8); // above the clocktower
 
-    // The line from the plant's crown to the clocktower, sagging between them
-    const from = pos.clone().add(new THREE.Vector3(0, 13, 0));
-    const to = new THREE.Vector3(0, 6.5, 0);
-    const midPoint = from.clone().lerp(to, 0.5).add(new THREE.Vector3(0, -6, 0));
-    const curve = new THREE.CatmullRomCurve3([from, midPoint, to]);
-    const lineMat = track(new THREE.MeshBasicMaterial({ color: COLORS.foreign, transparent: true, opacity: 0.55 }));
-    const line = new THREE.Mesh(track(new THREE.TubeGeometry(curve, 48, 0.06, 5, false)), lineMat);
-    anchor.add(line);
-    const pulseMat = track(new THREE.MeshBasicMaterial({ color: 0xd7ecff }));
-    const pulses = Array.from({ length: 4 }, (_, i) => {
-      const p = new THREE.Mesh(track(new THREE.SphereGeometry(0.16, 6, 4)), pulseMat);
-      anchor.add(p);
-      return { mesh: p, offset: i / 4 };
-    });
-    return { glowMat, lineMat, pulses, curve, beacon, power: 1 };
+  // A dark cloud that drifts in over the boiler
+  const storm = new THREE.Group();
+  const stormMat = track(new THREE.MeshStandardMaterial({ color: 0x2b3445, roughness: 1, flatShading: true, transparent: true, opacity: 0.95 }));
+  const puffGeo = track(new THREE.IcosahedronGeometry(1, 1));
+  [
+    [0, 0, 0, 1.8],
+    [1.8, -0.3, 0.4, 1.4],
+    [-1.7, -0.2, -0.3, 1.5],
+    [0.6, 0.8, -0.5, 1.3],
+    [-0.8, 0.6, 0.6, 1.2],
+    [2.9, -0.5, -0.2, 1],
+    [-2.8, -0.4, 0.3, 1],
+  ].forEach(([x, y, z, s]) => {
+    const puff = new THREE.Mesh(puffGeo, stormMat);
+    puff.position.set(x, y, z);
+    puff.scale.set(s * 1.3, s * 0.8, s);
+    storm.add(puff);
   });
+  city.add(storm);
 
-  // The reserve line: from the city's own engine to the clocktower, copper, lit only in a blackout
-  const reserveCurve = new THREE.CatmullRomCurve3([new THREE.Vector3(-3.2, 2.6, 1.2), new THREE.Vector3(-1.6, 5.4, 1.4), new THREE.Vector3(0, 6.5, 0.8)]);
-  const reserveMat = track(new THREE.MeshBasicMaterial({ color: COLORS.copper, transparent: true, opacity: 0 }));
-  city.add(new THREE.Mesh(track(new THREE.TubeGeometry(reserveCurve, 24, 0.08, 6, false)), reserveMat));
+  // The bolt: a zigzag from the cloud to the roof
+  const boltPath = new THREE.CurvePath<THREE.Vector3>();
+  const boltPoints = [
+    new THREE.Vector3(3.4, 10, 1.6),
+    new THREE.Vector3(2.6, 8.3, 1.7),
+    new THREE.Vector3(3.7, 6.9, 1.5),
+    new THREE.Vector3(2.8, 5.2, 1.7),
+    new THREE.Vector3(3.3, 4.2, 1.6),
+    STRIKE.clone(),
+  ];
+  for (let i = 0; i < boltPoints.length - 1; i++) boltPath.add(new THREE.LineCurve3(boltPoints[i], boltPoints[i + 1]));
+  const boltMat = track(new THREE.MeshBasicMaterial({ color: 0xe8f4ff, transparent: true, opacity: 0 }));
+  const bolt = new THREE.Mesh(track(new THREE.TubeGeometry(boltPath, 40, 0.09, 5, false)), boltMat);
+  city.add(bolt);
+  const flash = new THREE.PointLight(0xcfe3ff, 0, 40, 1.5);
+  flash.position.set(3.1, 6, 3);
+  city.add(flash);
+
+  // The alarm lamp on the struck boiler: red while broken, green once repaired
+  const lampMat = track(new THREE.MeshBasicMaterial({ color: 0xff5a4a }));
+  const lamp = new THREE.Mesh(track(new THREE.SphereGeometry(0.2, 10, 8)), lampMat);
+  lamp.position.set(4.05, 2.55, 2.4);
+  city.add(lamp);
+
+  // The automaton: a brass body, a spinning copper ring, a steam-blue eye
+  const automaton = new THREE.Group();
+  automaton.add(new THREE.Mesh(track(new THREE.SphereGeometry(0.34, 14, 10)), brassMat));
+  const ring = new THREE.Mesh(track(new THREE.TorusGeometry(0.55, 0.06, 6, 20)), copperMat);
+  ring.rotation.x = Math.PI / 2;
+  automaton.add(ring);
+  const eye = new THREE.Mesh(track(new THREE.SphereGeometry(0.1, 8, 6)), track(new THREE.MeshBasicMaterial({ color: COLORS.foreign })));
+  eye.position.set(0, 0, 0.32);
+  automaton.add(eye);
+  automaton.position.copy(HOME);
+  city.add(automaton);
+
+  // Sparks while it repairs
+  const sparkCount = 28;
+  const sparkPos = new Float32Array(sparkCount * 3);
+  const sparkGeo = track(new THREE.BufferGeometry());
+  sparkGeo.setAttribute("position", new THREE.BufferAttribute(sparkPos, 3));
+  const sparkMat = track(new THREE.PointsMaterial({ color: COLORS.brassLight, size: 0.14, transparent: true, opacity: 0 }));
+  city.add(new THREE.Points(sparkGeo, sparkMat));
 
   // Steam from the chimneys
   const steamGeo = track(new THREE.SphereGeometry(0.22, 6, 4));
@@ -358,7 +385,6 @@ function buildScene(container: HTMLDivElement, reducedMotion: boolean): Cleanup 
     // Wide screens: the city sits right of the headline. Narrow ones: centred, further back.
     const wide = camera.aspect > 1.1;
     city.position.set(wide ? 12.5 : 0, wide ? 0 : 3, 0);
-    anchor.position.set(city.position.x, city.position.y, 0);
     base.set(wide ? 1 : 0, wide ? 7 : 8, wide ? 40 : 52);
     target.set(wide ? 7 : 0, wide ? 2.5 : 3.5, 0);
   };
@@ -366,48 +392,78 @@ function buildScene(container: HTMLDivElement, reducedMotion: boolean): Cleanup 
   ro.observe(container);
   resize();
 
-  // Blackout cycle: 9 s per round. 0–1.5 s stutter, 1.5–5.5 s dark, then back.
-  const CYCLE = 9;
-  let victim = 0;
-  let lastRound = -1;
+  // Storm cycle, 10 s: the storm comes in (0–2), lightning (2), broken (2.2–7), the automaton flies out
+  // (2.6–4.2), repairs (4.2–6.8), lights back and a green lamp (7–8.2), the automaton flies home (7–8.6)
+  const CYCLE = 10;
+  const ease = (x: number) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+  const flyPoint = new THREE.Vector3();
+  const fly = (from: THREE.Vector3, to: THREE.Vector3, u: number, out: THREE.Vector3) => {
+    const k = ease(u);
+    out.lerpVectors(from, to, k);
+    out.y += Math.sin(k * Math.PI) * 1.6;
+    return out;
+  };
+  const REPAIR = STRIKE.clone().add(new THREE.Vector3(0.2, 1.1, 0.9));
 
   const start = performance.now();
   let raf = 0;
   let visible = true;
 
   const frame = (t: number) => {
-    const round = Math.floor(t / CYCLE);
-    if (round !== lastRound) {
-      lastRound = round;
-      victim = (victim + 1 + Math.floor(Math.random() * 2)) % plants.length;
-    }
-    const phase = t % CYCLE;
-    let blackout = 0;
-    plants.forEach((plant, i) => {
-      let power = 1;
-      if (i === victim) {
-        if (phase < 1.5) power = Math.sin(phase * 40) > 0.2 ? 1 : 0.15;
-        else if (phase < 5.5) power = 0;
-        else if (phase < 6.3) power = (phase - 5.5) / 0.8;
-        blackout = 1 - power;
-      }
-      plant.power = power;
-      plant.glowMat.emissiveIntensity = 0.1 + power * 2;
-      plant.lineMat.opacity = 0.08 + power * 0.5;
-      (plant.beacon.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.3 + (Math.sin(t * 3 + i) > 0 ? 2 : 0.3);
-      plant.pulses.forEach((p) => {
-        const u = (p.offset + t * 0.18) % 1;
-        p.mesh.position.copy(plant.curve.getPointAt(u));
-        p.mesh.visible = power > 0.5;
-      });
-    });
+    const p = t % CYCLE;
 
-    // The city answers: its own engines flare, the reserve line lights, the windows stay on
-    engines.forEach((m) => {
-      m.emissiveIntensity = 0.4 + blackout * 2.2;
-    });
-    reserveMat.opacity = blackout * 0.95;
-    cityGlow.intensity = 18 + blackout * 14;
+    // The storm drifts in from the right, then leaves to the left and fades
+    const arrive = ease(p / 2);
+    const leave = ease((p - 6) / 3.5);
+    storm.position.set(STRIKE.x + (1 - arrive) * 14 - leave * 16, 11 + leave * 2, STRIKE.z);
+    stormMat.opacity = 0.95 * arrive * (1 - leave);
+    storm.visible = stormMat.opacity > 0.02;
+
+    // Lightning
+    const strike = p >= 2 && p < 2.35;
+    boltMat.opacity = strike ? (Math.sin(p * 90) > -0.3 ? 1 : 0.2) : 0;
+    flash.intensity = strike ? 70 : 0;
+
+    // Broken, then repaired
+    const broken = p >= 2.2 && p < 7;
+    struckWindowMat.color.setHex(broken ? COLORS.rockDark : COLORS.window);
+    struckEngine.emissiveIntensity = broken ? 0 : 0.4;
+    if (broken) {
+      lamp.visible = Math.sin(p * 9) > 0;
+      lampMat.color.setHex(0xff5a4a);
+    } else if (p >= 7 && p < 8.2) {
+      lamp.visible = true;
+      lampMat.color.setHex(0x5fc2aa);
+    } else {
+      lamp.visible = false;
+    }
+    cityGlow.intensity = broken ? 14 : 18;
+
+    // The automaton: out, repair, home
+    if (p >= 2.6 && p < 4.2) {
+      automaton.position.copy(fly(HOME, REPAIR, (p - 2.6) / 1.6, flyPoint));
+    } else if (p >= 4.2 && p < 7) {
+      automaton.position.set(REPAIR.x + Math.sin(p * 6) * 0.08, REPAIR.y + Math.sin(p * 4) * 0.12, REPAIR.z);
+    } else if (p >= 7 && p < 8.6) {
+      automaton.position.copy(fly(REPAIR, HOME, (p - 7) / 1.6, flyPoint));
+    } else {
+      automaton.position.set(HOME.x, HOME.y + Math.sin(t * 2) * 0.1, HOME.z);
+    }
+    ring.rotation.z = t * 6;
+    automaton.lookAt(camera.position);
+
+    const repairing = p >= 4.4 && p < 6.8;
+    sparkMat.opacity = repairing ? 0.9 : 0;
+    if (repairing) {
+      for (let i = 0; i < sparkCount; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const r = Math.random() * 0.7;
+        sparkPos[i * 3] = STRIKE.x + Math.cos(a) * r;
+        sparkPos[i * 3 + 1] = STRIKE.y + 0.3 + Math.random() * 0.6;
+        sparkPos[i * 3 + 2] = STRIKE.z + 0.6 + Math.sin(a) * r * 0.5;
+      }
+      sparkGeo.attributes.position.needsUpdate = true;
+    }
 
     // Everything keeps flying
     city.position.y = (camera.aspect > 1.1 ? 0 : 3) + Math.sin(t * 0.6) * 0.35;
@@ -445,8 +501,8 @@ function buildScene(container: HTMLDivElement, reducedMotion: boolean): Cleanup 
 
   camera.position.copy(base);
   if (reducedMotion) {
-    // One still frame, mid-blackout, so the story is still told
-    frame(3);
+    // One still frame, mid-repair, so the story is still told
+    frame(5);
   } else {
     loop();
   }

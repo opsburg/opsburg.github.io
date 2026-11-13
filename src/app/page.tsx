@@ -1,45 +1,29 @@
-import { Bot, Cog, Map, ServerCog, ShieldCheck, Siren, Users } from "lucide-react";
+import { Anchor, CloudLightning, Flame, Map, Ship, Target, Trophy, Wrench } from "lucide-react";
 import HeroScene from "@/components/HeroScene";
-import { CITY, DESCRIPTION, FORCES, GITHUB_URL, POWER } from "@/lib/site";
+import { CITY, DESCRIPTION, FORCES, GAME, GITHUB_URL, PLATFORM } from "@/lib/site";
 
-const STOPS = [
-  {
-    icon: Users,
-    title: "People stop",
-    text: "The cloud region that hosts your tools goes down. Tickets, deploys, dashboards: the whole team waits for someone else's status page.",
-  },
-  {
-    icon: Bot,
-    title: "Agents stop",
-    text: "The AI model behind your agents is rate-limited or offline. Every automated process that called it stalls, all at once.",
-  },
-  {
-    icon: Siren,
-    title: "Nobody can fix it",
-    text: "The failure is not in your code or your servers. There is nothing to roll back, nobody to page, no date for the return.",
-  },
-] as const;
+const GAME_ICONS = [Flame, Target, CloudLightning, Map];
 
 const STEPS = [
   {
-    icon: Map,
-    title: "Map your power lines",
-    text: "Found your city from your real stack. Every building shows which provider it draws power from, so the single points of failure light up on the map.",
+    icon: Anchor,
+    title: "Found your city",
+    text: "Connect your Git provider, your cluster and your sign-on. Your first island rises from the clouds with a clocktower on top.",
   },
   {
-    icon: ServerCog,
-    title: "Build your own engines",
-    text: "Move what matters onto infrastructure you control: your servers, a European cloud, an open model you run yourself.",
+    icon: Wrench,
+    title: "Build on real ground",
+    text: "Place a factory and Opsburg creates the service or the agent: repository, pipeline, container, all from proven templates.",
   },
   {
-    icon: Cog,
-    title: "Lay reserve lines",
-    text: "Give each critical building and each automaton a second source, so the load moves over when the first one goes dark.",
+    icon: Ship,
+    title: "Launch the airships",
+    text: "Tag a version and an airship takes off. Behind it, a real build and a real GitOps deploy through Argo CD.",
   },
   {
-    icon: ShieldCheck,
-    title: "Rehearse the blackout",
-    text: "Cut a power plant on purpose and watch what keeps flying. Fix what falls before a real outage finds it.",
+    icon: Trophy,
+    title: "Keep the city flying",
+    text: "When something breaks a storm hits the island. Read the telegraph, send your automatons, clear the sky and keep the streak.",
   },
 ] as const;
 
@@ -54,9 +38,9 @@ export default function Home() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-sky" />
         <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-24 pt-24 md:justify-center md:pb-16">
           <div className="max-w-xl">
-            <p className="text-copper uppercase tracking-[0.25em] text-xs font-semibold">Business continuity, played as a city</p>
+            <p className="text-copper uppercase tracking-[0.25em] text-xs font-semibold">A city builder for your cloud</p>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] mt-4">
-              When the giants stumble, your city <span className="brass-text">keeps flying</span>.
+              Keep your cloud <span className="brass-text">up and running</span>. Play it like a city.
             </h1>
             <p className="text-ink text-lg mt-6">{DESCRIPTION}</p>
             <div className="flex flex-wrap gap-3 mt-8">
@@ -66,53 +50,35 @@ export default function Home() {
               >
                 Follow the build on GitHub
               </a>
-              <a href="#risk" className="px-5 py-2.5 rounded-md brass-border bg-sky-deep/40 hover:bg-brass/10">
-                See the risk
+              <a href="#platform" className="px-5 py-2.5 rounded-md brass-border bg-sky-deep/40 hover:bg-brass/10">
+                See what it does
               </a>
             </div>
             <p className="text-sm text-ink/80 mt-4">In the workshop. Not playable yet.</p>
           </div>
         </div>
         <p className="sr-only">
-          Animated scene: a steampunk city floats over the clouds, wired to three foreign power plants. One plant goes dark,
-          its line dies, the city&apos;s own brass engines flare up and a copper reserve line takes the load. The city keeps
-          flying.
+          Animated scene: a steampunk city floats over the clouds. A storm rolls in and lightning strikes a boiler house,
+          which goes dark with a red lamp. A small brass automaton flies out from the clocktower, repairs it, and the lights
+          come back on. The city keeps flying.
         </p>
         <a
-          href="#risk"
+          href="#platform"
           className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-xs uppercase tracking-[0.25em] text-ink/80 hover:text-cream"
         >
           Scroll
         </a>
       </section>
 
-      {/* The risk */}
-      <section id="risk" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
-        <h2 className="font-display text-3xl font-bold">One hiccup over there, a full stop over here</h2>
+      {/* The platform */}
+      <section id="platform" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
+        <h2 className="font-display text-3xl font-bold">Build, ship and run, in one place</h2>
         <p className="text-ink mt-3 max-w-2xl">
-          Your processes now run on people and on agents, and both run on a few US clouds and AI models. When one of them
-          has a bad hour, it is your bad hour too.
-        </p>
-        <div className="grid md:grid-cols-3 gap-4 mt-8">
-          {STOPS.map((item) => (
-            <div key={item.title} className="rounded-lg border border-copper/40 bg-copper/5 p-5">
-              <item.icon className="w-6 h-6 text-copper" aria-hidden="true" />
-              <p className="font-semibold mt-3">{item.title}</p>
-              <p className="text-ink text-sm mt-2">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Power */}
-      <section id="power" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
-        <h2 className="font-display text-3xl font-bold">Where your city gets its power</h2>
-        <p className="text-ink mt-3 max-w-2xl">
-          In Opsburg the dependency is something you can see. Every building is wired to a power plant, and the map shows
-          what goes dark when one of them does.
+          Under the brass, Opsburg is a real platform for your apps and AI agents: your repositories, your pipelines, your
+          Kubernetes.
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-          {POWER.map((item) => (
+          {PLATFORM.map((item) => (
             <div key={item.name} className="rounded-lg brass-border bg-sky-deep/50 p-5">
               <p className="font-display text-lg text-cream">{item.name}</p>
               <p className="text-copper text-sm font-semibold mt-1">{item.real}</p>
@@ -122,25 +88,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section id="how" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
-        <h2 className="font-display text-3xl font-bold">How a city learns to fly on its own</h2>
-        <ol className="grid md:grid-cols-2 gap-6 mt-8">
-          {STEPS.map((step, index) => (
-            <li key={step.title} className="flex gap-4">
-              <div className="shrink-0 w-11 h-11 rounded-full brass-border flex items-center justify-center">
-                <step.icon className="w-5 h-5 text-brass" aria-hidden="true" />
+      {/* The game */}
+      <section id="game" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
+        <h2 className="font-display text-3xl font-bold">Keeping it up is the game</h2>
+        <p className="text-ink mt-3 max-w-2xl">
+          Running a cloud is a hundred small chores and a few bad nights. Opsburg turns them into a city your team wants to
+          look after.
+        </p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+          {GAME.map((item, index) => {
+            const Icon = GAME_ICONS[index];
+            return (
+              <div key={item.name} className="rounded-lg border border-copper/40 bg-copper/5 p-5">
+                <Icon className="w-6 h-6 text-copper" aria-hidden="true" />
+                <p className="font-semibold mt-3">{item.name}</p>
+                <p className="text-ink text-sm mt-2">{item.text}</p>
               </div>
-              <div>
-                <p className="font-semibold">
-                  <span className="text-copper mr-2">{index + 1}.</span>
-                  {step.title}
-                </p>
-                <p className="text-ink text-sm mt-1">{step.text}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+            );
+          })}
+        </div>
       </section>
 
       {/* The city */}
@@ -171,14 +137,35 @@ export default function Home() {
         </div>
       </section>
 
+      {/* How it works */}
+      <section id="how" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-20">
+        <h2 className="font-display text-3xl font-bold">How a city grows</h2>
+        <ol className="grid md:grid-cols-2 gap-6 mt-8">
+          {STEPS.map((step, index) => (
+            <li key={step.title} className="flex gap-4">
+              <div className="shrink-0 w-11 h-11 rounded-full brass-border flex items-center justify-center">
+                <step.icon className="w-5 h-5 text-brass" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="font-semibold">
+                  <span className="text-copper mr-2">{index + 1}.</span>
+                  {step.title}
+                </p>
+                <p className="text-ink text-sm mt-1">{step.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
       {/* CTA */}
       <section className="max-w-3xl mx-auto px-4 py-16 text-center">
         <h2 className="font-display text-3xl font-bold">
-          Build a city that <span className="brass-text">stays up</span>
+          The shipyard is <span className="brass-text">open</span>
         </h2>
         <p className="text-ink mt-4">
-          Opsburg is in the workshop. Follow the GitHub organization to see it take shape, and tell us which outage
-          stopped your company last time.
+          Opsburg is in the workshop. Follow the GitHub organization to see it take shape, and tell us which storm keeps
+          you up at night.
         </p>
         <a
           href={GITHUB_URL}
