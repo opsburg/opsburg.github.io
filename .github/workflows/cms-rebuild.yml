@@ -1,0 +1,43 @@
+# Rebuild the site because a post was published in the CMS.
+#
+# Separate from deploy.yml so the two reasons a deploy happens stay legible in
+# the Actions tab: "Deploy to GitHub Pages" runs are code changes, "CMS rebuild"
+# runs are content changes. The build itself is not duplicated — this workflow
+# calls the one in deploy.yml.
+name: CMS rebuild
+
+on:
+  # Fired by the webhook configured in the Sanity Studio: it POSTs to GitHub's
+  # repository_dispatch API with this exact event_type. See docs/blog.md, and
+  # scripts/create-sanity-webhook.sh, which creates that webhook.
+  #
+  # Why it is needed at all: the site is static HTML, and blog content is read
+  # from Sanity during `pnpm run build`. Without a new build, a post published
+  # in the Studio never appears online.
+  repository_dispatch:
+    types: [sanity-publish]
+
+# The reusable workflow runs with the permissions granted here: a called
+# workflow can drop permissions but never add them, so the set below has to
+# cover everything deploy.yml does.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Deliberately NOT the "pages" group used by deploy.yml. This workflow's run and
+# the run it calls are two separate runs: if both waited on the same group, the
+# caller would hold it while the callee queued behind it, and the rebuild would
+# never start. Its own group still collapses a burst of publications — editing
+# three posts in a row queues one rebuild, not three — and cancelling a caller
+# cancels the build it called.
+concurrency:
+  group: cms-rebuild
+  cancel-in-progress: true
+
+jobs:
+  rebuild:
+    name: Build and deploy
+    uses: ./.github/workflows/deploy.yml
+    # A called workflow gets no secrets unless they are passed.
+    secrets: inherit

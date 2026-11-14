@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { GITHUB_URL, SITE_NAME } from "@/lib/site";
 
-export default function Navigation() {
+export default function Navigation({ showBlog = false }: { showBlog?: boolean }) {
   return (
     <header className="fixed top-0 inset-x-0 z-20 bg-sky-deep/80 backdrop-blur border-b border-brass/20">
       <nav className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -14,6 +14,7 @@ export default function Navigation() {
           <Link href="/#platform" className="hover:text-cream hidden md:inline">Platform</Link>
           <Link href="/gamified-devops" className="hover:text-cream hidden sm:inline">Why a game</Link>
           <Link href="/vibe-coding" className="hover:text-cream hidden sm:inline">Vibe coding</Link>
+          {showBlog && <Link href="/blog" className="hover:text-cream">Blog</Link>}
           <Link href="/faq" className="hover:text-cream">FAQ</Link>
           <a href={GITHUB_URL} className="px-3 py-1.5 rounded-md brass-border text-cream hover:bg-brass/10">
             GitHub

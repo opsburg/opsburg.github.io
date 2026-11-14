@@ -1,0 +1,58 @@
+# Publishes the posts whose date has arrived.
+#
+# The blog schedules by keeping a post as a Sanity draft until its publishedAt,
+# rather than by filtering on date at build time — src/lib/blog/queries.ts
+# explains why. This workflow is the half that makes the date mean something.
+#
+# It does not build anything. Publishing fires the Sanity webhook, which
+# triggers cms-rebuild.yml, which is where deploys already live.
+name: Publish scheduled posts
+
+on:
+  schedule:
+    # 06:00 UTC daily. The date on a post is a day, not an hour, so a single
+    # morning pass is enough — and one run a day keeps this off the critical
+    # path of everything else.
+    - cron: "0 6 * * *"
+
+  # For checking what would go out, and for publishing early.
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "List what is due without publishing it"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# A second run while one is publishing would try to publish the same drafts
+# twice. The second write is harmless — createOrReplace is idempotent and the
+# draft is already gone — but the run would fail confusingly.
+concurrency:
+  group: publish-scheduled
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+
+      - name: Publish what is due
+        env:
+          # A Sanity token with write access to the dataset. Create it at
+          # sanity.io/manage → API → Tokens with the Editor role; it needs
+          # nothing beyond writing documents.
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          # Until the token is set the blog has no scheduler: skip instead of failing every morning.
+          if [ -z "$SANITY_WRITE_TOKEN" ]; then
+            echo "::notice::SANITY_WRITE_TOKEN is not set, nothing to publish"
+            exit 0
+          fi
+          node scripts/publish-scheduled-posts.mjs

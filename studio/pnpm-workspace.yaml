@@ -1,0 +1,35 @@
+# This file is what keeps the Studio a separate install.
+#
+# pnpm walks up looking for a pnpm-workspace.yaml, and the site has one in the
+# repository root: without this file `pnpm install` here would resolve against
+# that root and install nothing. With it, studio/ is its own pnpm root — its own
+# lockfile, its own node_modules — so the site's `pnpm install` never pulls
+# Sanity's ~900 packages into the website's build.
+
+# esbuild's postinstall links its platform binary; without it `sanity dev` and
+# `sanity build` cannot start.
+allowBuilds:
+  esbuild: true
+
+# Written by pnpm itself: the account's supply-chain policy holds new releases
+# back for a few days, and these are the versions this lockfile pins. pnpm
+# refreshes the list on the next upgrade — it is not maintained by hand.
+minimumReleaseAgeExclude:
+  - '@portabletext/editor@8.0.2'
+  - '@portabletext/plugin-character-pair-decorator@9.0.2'
+  - '@portabletext/plugin-dnd@2.0.2'
+  - '@portabletext/plugin-input-rule@7.0.2'
+  - '@portabletext/plugin-list-index@2.0.2'
+  - '@portabletext/plugin-markdown-shortcuts@9.0.2'
+  - '@portabletext/plugin-one-line@8.0.2'
+  - '@portabletext/plugin-paste-link@5.0.2'
+  - '@portabletext/plugin-table@2.0.2'
+  - '@portabletext/plugin-typography@9.0.2'
+  - '@sanity/access-ui@6.11.0'
+  - '@sanity/diff@6.11.0'
+  - '@sanity/mutator@6.11.0'
+  - '@sanity/schema@6.11.0'
+  - '@sanity/types@6.11.0'
+  - '@sanity/util@6.11.0'
+  - '@sanity/vision@6.11.0'
+  - sanity@6.11.0

@@ -13,6 +13,16 @@
   --color-cream: #f6ecd3;
   --color-ink: #c9d1db;
 
+  /* Tokens the blog components use (shadcn names), mapped onto the palette. */
+  --color-primary: #c9952a;
+  --color-primary-glow: #f1d27a;
+  --color-foreground: #f6ecd3;
+  --color-muted-foreground: #c9d1db;
+  --color-border: #45422f;
+  --color-card: #071629;
+  --color-surface: #071629;
+  --color-surface-variant: #11294a;
+
   --font-display: "Cinzel", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
 }
@@ -53,4 +63,193 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-drift, .animate-spin-slow { animation: none; }
+}
+
+/*
+ * Article typography.
+ *
+ * Blog bodies come from the CMS as Portable Text and are turned into markup by
+ * src/components/blog/ArticleBody.tsx, so the elements carry no Tailwind
+ * utilities: the styling has to live here, scoped to `.article`. Colours and
+ * radii are the design system's tokens, so an article matches the rest of the
+ * site without redefining the palette.
+ */
+.article {
+  color: var(--color-foreground);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.article > * + * {
+  margin-top: 1.5rem;
+}
+
+.article h2 {
+  margin-top: 3rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-foreground);
+}
+
+.article h3 {
+  margin-top: 2.5rem;
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-foreground);
+}
+
+.article h4 {
+  margin-top: 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+
+.article p {
+  color: color-mix(in srgb, var(--color-foreground) 85%, transparent);
+}
+
+.article a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.article a:hover {
+  color: var(--color-primary-glow);
+}
+
+.article strong {
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.article ul,
+.article ol {
+  padding-left: 1.5rem;
+  color: color-mix(in srgb, var(--color-foreground) 85%, transparent);
+}
+
+.article ul {
+  list-style: disc;
+}
+
+.article ol {
+  list-style: decimal;
+}
+
+.article li + li {
+  margin-top: 0.5rem;
+}
+
+.article blockquote {
+  border-left: 3px solid var(--color-primary);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  font-style: italic;
+  color: var(--color-foreground);
+}
+
+.article blockquote p {
+  margin: 0;
+  color: inherit;
+}
+
+/* Inline code, as opposed to the code block below. */
+.article :not(pre) > code {
+  border-radius: 0.25rem;
+  background: var(--color-surface-variant);
+  padding: 0.15em 0.4em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.875em;
+}
+
+.article pre {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius, 0.5rem);
+  background: var(--color-surface);
+  padding: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* A code block with a filename: the name sits in a strip on top of the block,
+ * so the two read as one object and the rounded corners stay continuous. */
+.article .code-block-name {
+  margin: 0;
+  border: 1px solid var(--color-border);
+  border-bottom: 0;
+  border-radius: var(--radius, 0.5rem) var(--radius, 0.5rem) 0 0;
+  background: var(--color-surface-variant);
+  padding: 0.5rem 1.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8125rem;
+  color: var(--color-muted-foreground);
+}
+
+.article .code-block-name + pre {
+  border-radius: 0 0 var(--radius, 0.5rem) var(--radius, 0.5rem);
+}
+
+/* Tables come from the CMS with an unknown number of columns, so the table
+ * scrolls inside its own box rather than widening the article. */
+.article .table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius, 0.5rem);
+}
+
+.article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.article th,
+.article td {
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.article th {
+  background: var(--color-surface-variant);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-foreground);
+}
+
+.article td {
+  color: color-mix(in srgb, var(--color-foreground) 85%, transparent);
+}
+
+.article tbody tr:last-child th,
+.article tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.article pre code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: none;
+  padding: 0;
+}
+
+.article hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.article figure {
+  margin-top: 2rem;
+}
+
+.article figcaption {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-muted-foreground);
 }

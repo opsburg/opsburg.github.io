@@ -1,0 +1,27 @@
+{
+  "name": "opsburg-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sanity Studio: authoring the blog on opsburg.dev",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "login": "sanity login",
+    "validate": "sanity schema validate"
+  },
+  "dependencies": {
+    "@sanity/code-input": "^7.3.7",
+    "@sanity/table": "^3.1.16",
+    "@sanity/vision": "^6.11.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sanity": "^6.11.0",
+    "sanity-plugin-seofields": "^1.11.0",
+    "styled-components": "^6.5.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "typescript": "^5.9.0"
+  }
+}

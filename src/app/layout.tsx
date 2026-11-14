@@ -3,6 +3,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { DESCRIPTION, SITE_NAME, SITE_URL, TAGLINE } from "@/lib/site";
+import { hasPosts } from "@/lib/blog";
 
 export const viewport: Viewport = {
   themeColor: "#0f1c2e",
@@ -43,13 +44,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  // The Blog entry appears once the CMS has a published post.
+  const showBlog = await hasPosts();
   return (
     <html lang="en">
       <body className="antialiased flex flex-col min-h-screen">
-        <Navigation />
+        <Navigation showBlog={showBlog} />
         <main className="pt-16 flex-grow">{children}</main>
-        <Footer />
+        <Footer showBlog={showBlog} />
       </body>
     </html>
   );
