@@ -14,8 +14,8 @@ export default defineCliConfig({
     // Let the Studio pull Sanity's own updates, so nobody has to remember to
     // redeploy it for a patch release.
     autoUpdates: true,
-    // After the first `sanity deploy`, paste the application id it prints here
-    // as `appId`: without it every later deploy stops to ask which application
-    // to update.
+    // Printed by the first `sanity deploy`: without it every later deploy stops
+    // to ask which application to update.
+    appId: "xy6bdoh588o2wh020h8afz3h",
   },
 })
