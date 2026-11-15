@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GITHUB_URL, SITE_NAME, TAGLINE } from "@/lib/site";
+import { COOKIE_POLICY_URL, GITHUB_URL, PRIVACY_POLICY_URL, SITE_NAME, TAGLINE } from "@/lib/site";
 
 export default function Footer({ showBlog = false }: { showBlog?: boolean }) {
   return (
@@ -16,6 +16,13 @@ export default function Footer({ showBlog = false }: { showBlog?: boolean }) {
           <Link href="/faq" className="hover:text-cream">FAQ</Link>
           <a href={GITHUB_URL} className="hover:text-cream">GitHub</a>
         </div>
+      </div>
+      <div className="max-w-6xl mx-auto px-4 pb-8 flex flex-wrap gap-5 text-xs text-ink/70">
+        <a href={PRIVACY_POLICY_URL} className="hover:text-cream">Privacy policy</a>
+        <a href={COOKIE_POLICY_URL} className="hover:text-cream">Cookie policy</a>
+        <Link href="/terms" className="hover:text-cream">Terms</Link>
+        {/* iubenda opens the consent preferences on any link with this class. */}
+        <a href="#" className="iubenda-cs-preferences-link hover:text-cream">Cookie settings</a>
       </div>
     </footer>
   );

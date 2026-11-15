@@ -29,6 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/gamified-devops`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/vibe-coding`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/faq`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/terms`, changeFrequency: "yearly", priority: 0.2 },
     ...blog,
   ];
 }
