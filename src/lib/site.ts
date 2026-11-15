@@ -2,6 +2,22 @@ export const SITE_NAME = "Opsburg";
 export const SITE_URL = "https://opsburg.dev";
 export const GITHUB_URL = "https://github.com/opsburg";
 
+/**
+ * Google Analytics 4 measurement ID. The same property the old
+ * mfe-orchestrator.dev site reported into: that domain now redirects here, so
+ * Opsburg continues its history instead of starting from zero.
+ */
+export const GA_MEASUREMENT_ID = "G-SX41W7EVTN";
+
+/**
+ * iubenda (account info@opsburg.dev, site 4764007): the privacy and cookie
+ * policies live there, and its widget shows the cookie banner, keeps the
+ * consent and blocks Google Analytics until the visitor accepts it.
+ */
+export const IUBENDA_WIDGET_URL = "https://embeds.iubenda.com/widgets/cae3fc59-4aa1-481a-a751-a3587fe7c616.js";
+export const PRIVACY_POLICY_URL = "https://www.iubenda.com/privacy-policy/20257126";
+export const COOKIE_POLICY_URL = "https://www.iubenda.com/privacy-policy/20257126/cookie-policy";
+
 export const TAGLINE = "Keep your cloud up and running. Play it like a city.";
 export const DESCRIPTION =
   "Opsburg builds and ships your apps and AI agents, from the repository to your Kubernetes. Then it turns running them into a game: every service is a building, every deploy an airship, every incident a storm. Your team keeps the city flying, and your cloud stays up.";
