@@ -16,8 +16,8 @@ import {
   UserCheck,
   UserX,
 } from "lucide-react";
+import FollowButtons from "@/components/FollowButtons";
 import WorkshopScene from "@/components/WorkshopScene";
-import { GITHUB_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Vibe coding for everyone, governed",
@@ -128,8 +128,8 @@ export default function VibeCodingPage() {
             >
               How it works
             </a>
-            <a href={GITHUB_URL} className="px-5 py-2.5 rounded-md brass-border bg-sky-deep/40 hover:bg-brass/10">
-              Follow the build on GitHub
+            <a href="#follow" className="px-5 py-2.5 rounded-md brass-border bg-sky-deep/40 hover:bg-brass/10">
+              Follow the journey
             </a>
           </div>
         </div>
@@ -226,25 +226,18 @@ export default function VibeCodingPage() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-3xl mx-auto px-4 py-16 text-center">
+      <section id="follow" className="max-w-3xl mx-auto px-4 py-16 text-center scroll-mt-20">
         <h2 className="font-display text-3xl font-bold">
           Let everyone build. <span className="brass-text">Keep the city safe.</span>
         </h2>
         <p className="text-ink mt-4">
-          Opsburg is in the workshop, not playable yet. Follow the build on GitHub, and tell us what your people are
-          already building on their own.
+          Opsburg is in the workshop, not playable yet. Follow the journey on our social channels, and tell us what your
+          people are already building on their own.
         </p>
-        <div className="flex flex-wrap justify-center gap-3 mt-8">
-          <a
-            href={GITHUB_URL}
-            className="px-6 py-3 rounded-md font-semibold brass-button hover:brightness-110"
-          >
-            github.com/opsburg
-          </a>
-          <Link href="/gamified-devops" className="px-6 py-3 rounded-md brass-border hover:bg-brass/10">
-            Why gamified DevOps
-          </Link>
-        </div>
+        <FollowButtons className="mt-8" />
+        <Link href="/gamified-devops" className="inline-block mt-6 text-ink hover:text-cream underline underline-offset-4">
+          Why gamified DevOps
+        </Link>
       </section>
     </div>
   );

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Award, Ban, CloudLightning, EyeOff, Flame, Hammer, Hourglass, ListChecks, Map, Siren, Users } from "lucide-react";
+import FollowButtons from "@/components/FollowButtons";
 import StreakScene from "@/components/StreakScene";
-import { GITHUB_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Why gamified DevOps",
@@ -213,25 +213,18 @@ export default function GamifiedDevopsPage() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-3xl mx-auto px-4 py-16 text-center">
+      <section id="follow" className="max-w-3xl mx-auto px-4 py-16 text-center scroll-mt-20">
         <h2 className="font-display text-3xl font-bold">
           Keeping it up <span className="brass-text">is the game</span>
         </h2>
         <p className="text-ink mt-4">
-          Streaks, missions and storm drills are in the workshop, not playable yet. Follow the build on GitHub, and tell us
-          which chore your team keeps postponing.
+          Streaks, missions and storm drills are in the workshop, not playable yet. Follow the journey on our social
+          channels, and tell us which chore your team keeps postponing.
         </p>
-        <div className="flex flex-wrap justify-center gap-3 mt-8">
-          <a
-            href={GITHUB_URL}
-            className="px-6 py-3 rounded-md font-semibold brass-button hover:brightness-110"
-          >
-            github.com/opsburg
-          </a>
-          <Link href="/vibe-coding" className="px-6 py-3 rounded-md brass-border hover:bg-brass/10">
-            Vibe coding, governed
-          </Link>
-        </div>
+        <FollowButtons className="mt-8" />
+        <Link href="/vibe-coding" className="inline-block mt-6 text-ink hover:text-cream underline underline-offset-4">
+          Vibe coding, governed
+        </Link>
       </section>
     </div>
   );

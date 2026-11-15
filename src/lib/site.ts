@@ -3,14 +3,20 @@ export const SITE_URL = "https://opsburg.dev";
 export const GITHUB_URL = "https://github.com/opsburg";
 export const X_HANDLE = "@opsburg";
 
-/** Opsburg's own accounts, in the footer and in the Organization's sameAs. */
-export const SOCIAL_LINKS = [
-  { label: "GitHub", href: GITHUB_URL },
+/**
+ * Where the journey of Hollis and Pip goes out, one episode a day: the calls to
+ * action on the site send people here, Instagram first because that is where the
+ * Reels are.
+ */
+export const FOLLOW_LINKS = [
+  { label: "Instagram", href: "https://www.instagram.com/opsburg/" },
   { label: "X", href: "https://x.com/opsburg" },
   { label: "Bluesky", href: "https://bsky.app/profile/opsburg.bsky.social" },
-  { label: "Instagram", href: "https://www.instagram.com/opsburg/" },
   { label: "Threads", href: "https://www.threads.com/@opsburg" },
 ] as const;
+
+/** Opsburg's own accounts, in the footer and in the Organization's sameAs. */
+export const SOCIAL_LINKS = [{ label: "GitHub", href: GITHUB_URL }, ...FOLLOW_LINKS] as const;
 
 /**
  * Google Analytics 4 measurement ID. The same property the old

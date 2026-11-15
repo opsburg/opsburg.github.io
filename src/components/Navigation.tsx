@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GITHUB_URL, SITE_NAME } from "@/lib/site";
+import { SITE_NAME } from "@/lib/site";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Navigation({ showBlog = false }: { showBlog?: boolean }) {
@@ -17,9 +17,9 @@ export default function Navigation({ showBlog = false }: { showBlog?: boolean })
           <Link href="/vibe-coding" className="hover:text-cream hidden sm:inline">Vibe coding</Link>
           {showBlog && <Link href="/blog" className="hover:text-cream">Blog</Link>}
           <Link href="/faq" className="hover:text-cream">FAQ</Link>
-          <a href={GITHUB_URL} className="px-3 py-1.5 rounded-md brass-border text-cream hover:bg-brass/10">
-            GitHub
-          </a>
+          <Link href="/#follow" className="px-3 py-1.5 rounded-md brass-border text-cream hover:bg-brass/10">
+            Follow
+          </Link>
           <ThemeToggle />
         </div>
       </nav>

@@ -41,7 +41,7 @@ const FAQS = [
   },
   {
     q: "Can I play it today?",
-    a: "Not yet. Opsburg is in the workshop. Follow the GitHub organization to see it take shape.",
+    a: "Not yet. Opsburg is in the workshop. Follow the journey on Instagram, X, Bluesky and Threads to see it take shape.",
   },
 ] as const;
 

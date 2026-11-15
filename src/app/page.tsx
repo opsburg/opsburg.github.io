@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Anchor, CloudLightning, Flame, Map, Ship, Target, Trophy, Wrench } from "lucide-react";
+import FollowButtons from "@/components/FollowButtons";
 import HeroScene from "@/components/HeroScene";
-import { CITY, DESCRIPTION, FORCES, GAME, GITHUB_URL, PLATFORM } from "@/lib/site";
+import { CITY, DESCRIPTION, FORCES, GAME, PLATFORM } from "@/lib/site";
 
 const GAME_ICONS = [Flame, Target, CloudLightning, Map];
 
@@ -51,10 +52,10 @@ export default function Home() {
             <p className="text-ink text-lg mt-6">{DESCRIPTION}</p>
             <div className="flex flex-wrap gap-3 mt-8">
               <a
-                href={GITHUB_URL}
+                href="#follow"
                 className="px-5 py-2.5 rounded-md font-semibold brass-button hover:brightness-110"
               >
-                Follow the build on GitHub
+                Follow the journey
               </a>
               <a href="#platform" className="px-5 py-2.5 rounded-md brass-border bg-sky-deep/40 hover:bg-brass/10">
                 See what it does
@@ -173,20 +174,15 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-3xl mx-auto px-4 py-16 text-center">
+      <section id="follow" className="max-w-3xl mx-auto px-4 py-16 text-center scroll-mt-20">
         <h2 className="font-display text-3xl font-bold">
           The shipyard is <span className="brass-text">open</span>
         </h2>
         <p className="text-ink mt-4">
-          Opsburg is in the workshop. Follow the GitHub organization to see it take shape, and tell us which storm keeps
-          you up at night.
+          Opsburg is in the workshop. Follow the journey to the city on our social channels, one episode a day, and tell
+          us which storm keeps you up at night.
         </p>
-        <a
-          href={GITHUB_URL}
-          className="inline-block mt-8 px-6 py-3 rounded-md font-semibold brass-button hover:brightness-110"
-        >
-          github.com/opsburg
-        </a>
+        <FollowButtons className="mt-8" />
       </section>
     </div>
   );
