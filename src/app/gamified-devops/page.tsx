@@ -113,7 +113,7 @@ export default function GamifiedDevopsPage() {
             <div className="flex flex-wrap gap-3 mt-8">
               <a
                 href="#why"
-                className="px-5 py-2.5 rounded-md font-semibold text-sky-deep bg-gradient-to-r from-[#f1d27a] via-brass to-copper hover:brightness-110"
+                className="px-5 py-2.5 rounded-md font-semibold brass-button hover:brightness-110"
               >
                 Why it works
               </a>
@@ -224,7 +224,7 @@ export default function GamifiedDevopsPage() {
         <div className="flex flex-wrap justify-center gap-3 mt-8">
           <a
             href={GITHUB_URL}
-            className="px-6 py-3 rounded-md font-semibold text-sky-deep bg-gradient-to-r from-[#f1d27a] via-brass to-copper hover:brightness-110"
+            className="px-6 py-3 rounded-md font-semibold brass-button hover:brightness-110"
           >
             github.com/opsburg
           </a>

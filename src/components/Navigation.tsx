@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GITHUB_URL, SITE_NAME } from "@/lib/site";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navigation({ showBlog = false }: { showBlog?: boolean }) {
   return (
@@ -10,7 +11,7 @@ export default function Navigation({ showBlog = false }: { showBlog?: boolean })
           <img src="/logo.png" alt="" width={32} height={32} />
           {SITE_NAME}
         </Link>
-        <div className="flex items-center gap-5 text-sm text-ink">
+        <div className="flex items-center gap-3 sm:gap-5 text-sm text-ink">
           <Link href="/#platform" className="hover:text-cream hidden md:inline">Platform</Link>
           <Link href="/gamified-devops" className="hover:text-cream hidden sm:inline">Why a game</Link>
           <Link href="/vibe-coding" className="hover:text-cream hidden sm:inline">Vibe coding</Link>
@@ -19,6 +20,7 @@ export default function Navigation({ showBlog = false }: { showBlog?: boolean })
           <a href={GITHUB_URL} className="px-3 py-1.5 rounded-md brass-border text-cream hover:bg-brass/10">
             GitHub
           </a>
+          <ThemeToggle />
         </div>
       </nav>
     </header>
