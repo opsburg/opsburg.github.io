@@ -1,4 +1,5 @@
-import { GITHUB_URL, ORGANIZATION_DESCRIPTION, SITE_NAME, SITE_URL } from "./seo";
+import { ORGANIZATION_DESCRIPTION, SITE_NAME, SITE_URL } from "./seo";
+import { SOCIAL_LINKS } from "./site";
 
 /**
  * JSON-LD builders. Every node references the site's Organization and WebSite
@@ -14,7 +15,7 @@ export function organizationSchema() {
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
     description: ORGANIZATION_DESCRIPTION,
-    sameAs: [GITHUB_URL],
+    sameAs: SOCIAL_LINKS.map((s) => s.href),
   };
 }
 

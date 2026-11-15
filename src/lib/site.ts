@@ -1,6 +1,16 @@
 export const SITE_NAME = "Opsburg";
 export const SITE_URL = "https://opsburg.dev";
 export const GITHUB_URL = "https://github.com/opsburg";
+export const X_HANDLE = "@opsburg";
+
+/** Opsburg's own accounts, in the footer and in the Organization's sameAs. */
+export const SOCIAL_LINKS = [
+  { label: "GitHub", href: GITHUB_URL },
+  { label: "X", href: "https://x.com/opsburg" },
+  { label: "Bluesky", href: "https://bsky.app/profile/opsburg.bsky.social" },
+  { label: "Instagram", href: "https://www.instagram.com/opsburg/" },
+  { label: "Threads", href: "https://www.threads.com/@opsburg" },
+] as const;
 
 /**
  * Google Analytics 4 measurement ID. The same property the old
