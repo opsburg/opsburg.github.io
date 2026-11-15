@@ -148,6 +148,11 @@ function build(container: HTMLDivElement, reducedMotion: boolean) {
   const cityGlow = new THREE.PointLight(COLORS.window, 14, 20, 1.6);
   cityGlow.position.set(CITY.x, 4, 3);
   world.add(cityGlow);
+  // The glows are night lights: dimmer by day
+  stage.onTheme(() => {
+    workshopGlow.intensity = 10 * stage.env.glow;
+    cityGlow.intensity = 14 * stage.env.glow;
+  });
   const tower = box(1.3, 4.6, 1.3, m.wall);
   tower.position.set(CITY.x + 1.6, CITY.y + 2.8, -1.6);
   windowsOn(tower, 1.3, 4.6, 1.3, 3, 2);

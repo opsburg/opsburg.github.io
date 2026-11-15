@@ -1,7 +1,8 @@
 import * as THREE from "three";
+import { getTheme, onThemeChange } from "@/lib/theme";
 
 /*
- * Shared pieces for the page scenes: a night sky over a sea of clouds, flat-shaded brass and stone,
+ * Shared pieces for the page scenes: a sky over a sea of clouds (night in the dark theme, day in the light one), flat-shaded brass and stone,
  * floating islands, the automaton and the airship, text labels, and a render loop that pauses when the
  * scene is off screen or the tab is hidden. Plain three.js, no post-processing.
  */
@@ -29,6 +30,43 @@ export const COLORS = {
 
 export type Cleanup = () => void;
 
+/** The sky and the light for each theme: "Ottone e Notte" at night, a hazy brass afternoon by day. */
+const SKIES = {
+  night: {
+    top: COLORS.deep,
+    mid: COLORS.high,
+    horizon: 0x3d3340,
+    fog: COLORS.notte,
+    stars: 0.8,
+    hemiSky: 0x9fb7d6,
+    hemiGround: 0x3a2c20,
+    hemi: 0.95,
+    sun: 0xd6e2f5,
+    sunIntensity: 1.6,
+    exposure: 1.3,
+    clouds: 0x6f7f96,
+    cloudOpacity: 0.55,
+    glow: 1,
+  },
+  day: {
+    top: 0x5f9dd6,
+    mid: 0xa9cde6,
+    horizon: 0xf3dfb6,
+    fog: 0xd6e2e6,
+    stars: 0,
+    hemiSky: 0xe6f1ff,
+    hemiGround: 0x9a7d55,
+    hemi: 1.5,
+    sun: 0xfff0d4,
+    sunIntensity: 2.6,
+    exposure: 1.05,
+    clouds: 0xf7f4ee,
+    cloudOpacity: 0.9,
+    // Window and lamp glows are for the night: by day they only warm the walls a little
+    glow: 0.3,
+  },
+};
+
 export function supportsWebGL(): boolean {
   try {
     const canvas = document.createElement("canvas");
@@ -43,7 +81,8 @@ export const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 
 export function createStage(container: HTMLDivElement) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // Full-bleed canvases: 1.5x is sharp enough with antialiasing and far cheaper than 2x or 3x
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.3;
@@ -81,17 +120,18 @@ export function createStage(container: HTMLDivElement) {
   };
 
   // Sky: a vertical gradient on a large inverted sphere, with a warm haze near the horizon
+  const skyUniforms = {
+    top: { value: new THREE.Color(COLORS.deep) },
+    mid: { value: new THREE.Color(COLORS.high) },
+    horizon: { value: new THREE.Color(0x3d3340) },
+  };
   const sky = new THREE.Mesh(
     track(new THREE.SphereGeometry(200, 32, 16)),
     track(
       new THREE.ShaderMaterial({
         side: THREE.BackSide,
         depthWrite: false,
-        uniforms: {
-          top: { value: new THREE.Color(COLORS.deep) },
-          mid: { value: new THREE.Color(COLORS.high) },
-          horizon: { value: new THREE.Color(0x3d3340) },
-        },
+        uniforms: skyUniforms,
         vertexShader:
           "varying vec3 vPos; void main(){ vPos = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
         fragmentShader:
@@ -112,18 +152,44 @@ export function createStage(container: HTMLDivElement) {
   }
   const starGeo = track(new THREE.BufferGeometry());
   starGeo.setAttribute("position", new THREE.BufferAttribute(starPos, 3));
-  scene.add(
-    new THREE.Points(
-      starGeo,
-      track(new THREE.PointsMaterial({ color: COLORS.cream, size: 0.45, transparent: true, opacity: 0.8, fog: false })),
-    ),
-  );
+  const starMat = track(new THREE.PointsMaterial({ color: COLORS.cream, size: 0.45, transparent: true, opacity: 0.8, fog: false }));
+  const stars = new THREE.Points(starGeo, starMat);
+  scene.add(stars);
 
-  // Cool moon, faint sky fill
-  scene.add(new THREE.HemisphereLight(0x9fb7d6, 0x3a2c20, 0.95));
+  // Cool moon and a faint sky fill at night, a warm sun and a bright fill by day
+  const hemi = new THREE.HemisphereLight(0x9fb7d6, 0x3a2c20, 0.95);
+  scene.add(hemi);
   const moon = new THREE.DirectionalLight(0xd6e2f5, 1.6);
   moon.position.set(-30, 40, 20);
   scene.add(moon);
+
+  /** day: whether the light theme is on. glow: the factor for a scene's own window and lamp lights. */
+  const env = { day: false, glow: 1 };
+  const themed: ((day: boolean) => void)[] = [];
+  /** Registers a scene's own day/night changes; runs once now and again whenever the theme switches. */
+  const onTheme = (apply: (day: boolean) => void) => {
+    themed.push(apply);
+    apply(env.day);
+  };
+  const applyTheme = () => {
+    env.day = getTheme() === "light";
+    const v = env.day ? SKIES.day : SKIES.night;
+    skyUniforms.top.value.setHex(v.top);
+    skyUniforms.mid.value.setHex(v.mid);
+    skyUniforms.horizon.value.setHex(v.horizon);
+    fog.color.setHex(v.fog);
+    starMat.opacity = v.stars;
+    stars.visible = v.stars > 0;
+    hemi.color.setHex(v.hemiSky);
+    hemi.groundColor.setHex(v.hemiGround);
+    hemi.intensity = v.hemi;
+    moon.color.setHex(v.sun);
+    moon.intensity = v.sunIntensity;
+    renderer.toneMappingExposure = v.exposure;
+    env.glow = v.glow;
+    themed.forEach((apply) => apply(env.day));
+  };
+  applyTheme();
 
   const box = (w: number, h: number, d: number, material: THREE.Material) =>
     new THREE.Mesh(track(new THREE.BoxGeometry(w, h, d)), material);
@@ -163,7 +229,7 @@ export function createStage(container: HTMLDivElement) {
     }
   };
 
-  return { renderer, scene, camera, fog, disposables, track, mat, basic, m, box, island, windowsOn };
+  return { renderer, scene, camera, fog, disposables, track, mat, basic, m, box, island, windowsOn, env, onTheme, applyTheme };
 }
 
 export type Stage = ReturnType<typeof createStage>;
@@ -174,6 +240,10 @@ export function seaOfClouds(stage: Stage, count = 220) {
   const material = stage.track(
     new THREE.MeshStandardMaterial({ color: 0x6f7f96, roughness: 1, flatShading: true, transparent: true, opacity: 0.55 }),
   );
+  stage.onTheme((day) => {
+    material.color.setHex(day ? SKIES.day.clouds : SKIES.night.clouds);
+    material.opacity = day ? SKIES.day.cloudOpacity : SKIES.night.cloudOpacity;
+  });
   const clouds = stage.track(new THREE.InstancedMesh(geo, material, count));
   const data = Array.from({ length: count }, () => ({
     x: (Math.random() - 0.5) * 160,
@@ -299,8 +369,9 @@ export function makeBurst(stage: Stage, parent: THREE.Object3D, count: number, c
 type View = { base: THREE.Vector3; target: THREE.Vector3; fog?: number };
 
 /**
- * Runs the scene: resize, a camera that leans toward the pointer, a loop that pauses off screen, and a
- * single still frame under reduced motion. Returns the cleanup.
+ * Runs the scene: resize, a camera that leans toward the pointer, a loop that pauses off screen, a
+ * single still frame under reduced motion, and the switch between night and day when the theme changes.
+ * Returns the cleanup.
  */
 export function run(
   stage: Stage,
@@ -349,6 +420,11 @@ export function run(
   });
   io.observe(container);
 
+  const offTheme = onThemeChange(() => {
+    stage.applyTheme();
+    if (options.reducedMotion) render(options.still);
+  });
+
   const start = performance.now();
   let raf = 0;
   const loop = () => {
@@ -360,6 +436,7 @@ export function run(
 
   return () => {
     cancelAnimationFrame(raf);
+    offTheme();
     io.disconnect();
     ro.disconnect();
     window.removeEventListener("pointermove", onPointer);

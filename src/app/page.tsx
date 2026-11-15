@@ -31,13 +31,18 @@ const STEPS = [
 export default function Home() {
   return (
     <div>
-      {/* Hero: full screen, the 3D city behind the headline */}
-      <section className="relative -mt-16 h-[100svh] min-h-[600px] overflow-hidden bg-sky-deep">
-        <HeroScene />
-        {/* Scrims keep the headline readable over the scene */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sky-deep/90 via-sky-deep/50 to-transparent md:bg-gradient-to-r md:from-sky-deep/90 md:via-sky-deep/45 md:via-30% md:to-transparent md:to-55%" />
+      {/* Hero: the 3D city is the protagonist. Wide screens: full screen, the headline over its left side.
+          Narrow ones: the city across the top, the headline below it over the island's rock. */}
+      <section className="relative -mt-16 min-h-[100svh] overflow-hidden bg-sky-deep lg:h-[100svh] lg:min-h-[640px]">
+        <div className="absolute inset-x-0 top-0 h-[80svh] lg:inset-y-0 lg:h-auto">
+          <HeroScene />
+          {/* Narrow screens: the scene fades into the page behind the text */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent from-40% via-sky-deep/80 via-70% to-sky-deep lg:hidden" />
+        </div>
+        {/* Wide screens: a scrim on the left keeps the headline readable over the scene */}
+        <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-sky-deep/90 via-sky-deep/50 via-30% to-transparent to-50% lg:block" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-sky" />
-        <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-4 pb-24 pt-24 md:justify-center md:pb-16">
+        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-4 pb-20 pt-[46svh] lg:h-full lg:min-h-0 lg:justify-center lg:pb-16 lg:pt-24">
           <div className="max-w-xl">
             <p className="text-copper uppercase tracking-[0.25em] text-xs font-semibold">A city builder for your cloud</p>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] mt-4">
@@ -47,7 +52,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-3 mt-8">
               <a
                 href={GITHUB_URL}
-                className="px-5 py-2.5 rounded-md font-semibold text-sky-deep bg-gradient-to-r from-[#f1d27a] via-brass to-copper hover:brightness-110"
+                className="px-5 py-2.5 rounded-md font-semibold brass-button hover:brightness-110"
               >
                 Follow the build on GitHub
               </a>
@@ -178,7 +183,7 @@ export default function Home() {
         </p>
         <a
           href={GITHUB_URL}
-          className="inline-block mt-8 px-6 py-3 rounded-md font-semibold text-sky-deep bg-gradient-to-r from-[#f1d27a] via-brass to-copper hover:brightness-110"
+          className="inline-block mt-8 px-6 py-3 rounded-md font-semibold brass-button hover:brightness-110"
         >
           github.com/opsburg
         </a>

@@ -290,7 +290,7 @@ function build(container: HTMLDivElement, reducedMotion: boolean, counter: HTMLE
     gear.rotation.z = gearAngle;
     hand.rotation.z = -t * 0.8;
     engineMat.emissiveIntensity = 0.25 + day * 0.08;
-    glow.intensity = 12 + day * 1.4;
+    glow.intensity = (12 + day * 1.4) * stage.env.glow;
 
     city.position.y = (wide ? 0 : 2.5) + Math.sin(t * 0.6) * 0.3;
     city.rotation.y = -0.18 + Math.sin(t * 0.15) * 0.07;

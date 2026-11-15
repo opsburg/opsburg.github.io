@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { DESCRIPTION, GA_MEASUREMENT_ID, IUBENDA_WIDGET_URL, SITE_NAME, SITE_URL, TAGLINE, X_HANDLE } from "@/lib/site";
 import { hasPosts } from "@/lib/blog";
+import { THEME_SCRIPT } from "@/lib/theme";
 
 // The font files live in the repository (src/app/fonts, latin subset, OFL licensed):
 // neither the visitor's browser nor the build ever asks Google Fonts for them.
@@ -28,7 +29,10 @@ gtag('js', new Date());
 gtag('config', '${GA_MEASUREMENT_ID}');`;
 
 export const viewport: Viewport = {
-  themeColor: "#0f1c2e",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0f1c2e" },
+    { media: "(prefers-color-scheme: light)", color: "#f6eedb" },
+  ],
 };
 
 export const metadata: Metadata = {
@@ -71,9 +75,12 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   // The Blog entry appears once the CMS has a published post.
   const showBlog = await hasPosts();
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable}`}>
+    // The theme script sets data-theme before React hydrates, so the attribute differs from the server's
+    <html lang="en" className={`${display.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
-        {/* iubenda first, synchronous: its banner keeps the consent and blocks trackers until the visitor accepts. */}
+        {/* Before anything else: applies the stored theme before the first paint, so there is no flash. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        {/* iubenda next, synchronous: its banner keeps the consent and blocks trackers until the visitor accepts. */}
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src={IUBENDA_WIDGET_URL} />
         {/* Google Analytics, inert (type text/plain) until iubenda activates it on consent to measurement (purpose 4).

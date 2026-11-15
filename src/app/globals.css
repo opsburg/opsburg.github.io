@@ -24,11 +24,66 @@
 
   --font-display: var(--font-cinzel), "Cinzel", Georgia, serif;
   --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
+
+  /* The bright end of the brass gradients */
+  --color-brass-glow: #f1d27a;
 }
 
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
+}
+
+/*
+ * "Steampunk by day": parchment instead of the night sky, aged brass and copper, deep navy ink. The token
+ * names stay the same so every utility follows the theme: in light mode "cream" is the primary text colour
+ * and "sky-deep" the lightest paper. Text colours meet WCAG AA on every paper tone.
+ *
+ * The same block twice: once for an explicit choice (data-theme, set by src/lib/theme.ts), once for the
+ * system preference when no choice is stored. CSS has no way to share a declaration block between them.
+ */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-sky: #f6eedb;
+  --color-sky-deep: #fdf8ec;
+  --color-sky-high: #ecdcbb;
+  --color-brass: #7f5810;
+  --color-copper: #99441a;
+  --color-steam: #4a4438;
+  --color-cream: #14243d;
+  --color-ink: #3b4759;
+  --color-brass-glow: #b07d1e;
+  --color-primary: #6f4c0c;
+  --color-primary-glow: #99441a;
+  --color-foreground: #14243d;
+  --color-muted-foreground: #3b4759;
+  --color-border: #d6c49c;
+  --color-card: #fdf8ec;
+  --color-surface: #fdf8ec;
+  --color-surface-variant: #efe2c4;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --color-sky: #f6eedb;
+    --color-sky-deep: #fdf8ec;
+    --color-sky-high: #ecdcbb;
+    --color-brass: #7f5810;
+    --color-copper: #99441a;
+    --color-steam: #4a4438;
+    --color-cream: #14243d;
+    --color-ink: #3b4759;
+    --color-brass-glow: #b07d1e;
+    --color-primary: #6f4c0c;
+    --color-primary-glow: #99441a;
+    --color-foreground: #14243d;
+    --color-muted-foreground: #3b4759;
+    --color-border: #d6c49c;
+    --color-card: #fdf8ec;
+    --color-surface: #fdf8ec;
+    --color-surface-variant: #efe2c4;
+  }
 }
 
 body {
@@ -38,7 +93,7 @@ body {
 }
 
 .brass-text {
-  background: linear-gradient(135deg, #f1d27a 0%, var(--color-brass) 45%, var(--color-copper) 100%);
+  background: linear-gradient(135deg, var(--color-brass-glow) 0%, var(--color-brass) 45%, var(--color-copper) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -46,6 +101,22 @@ body {
 
 .brass-border {
   border: 1px solid color-mix(in srgb, var(--color-brass) 35%, transparent);
+}
+
+/* The main call to action: polished brass with navy lettering, the same in both themes. */
+.brass-button {
+  background: linear-gradient(to right, #f1d27a, #c9952a, #b4642e);
+  color: #071629;
+}
+
+/* The theme toggle shows the icon of the current choice, read from <html> so it is right on first paint. */
+.theme-toggle svg {
+  display: none;
+}
+:root:not([data-theme]) .theme-toggle .theme-icon-system,
+:root[data-theme="light"] .theme-toggle .theme-icon-light,
+:root[data-theme="dark"] .theme-toggle .theme-icon-dark {
+  display: block;
 }
 
 @keyframes drift {
