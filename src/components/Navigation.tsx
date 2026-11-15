@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { SITE_NAME } from "@/lib/site";
+import { FOLLOW_LINKS, SITE_NAME } from "@/lib/site";
+import { SocialIcon } from "./FollowButtons";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Navigation({ showBlog = false }: { showBlog?: boolean }) {
@@ -17,9 +18,15 @@ export default function Navigation({ showBlog = false }: { showBlog?: boolean })
           <Link href="/vibe-coding" className="hover:text-cream hidden sm:inline">Vibe coding</Link>
           {showBlog && <Link href="/blog" className="hover:text-cream">Blog</Link>}
           <Link href="/faq" className="hover:text-cream">FAQ</Link>
-          <Link href="/#follow" className="px-3 py-1.5 rounded-md brass-border text-cream hover:bg-brass/10">
+          <a
+            href={FOLLOW_LINKS[0].href}
+            target="_blank"
+            rel="me noopener"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md brass-border text-cream hover:bg-brass/10"
+          >
+            <SocialIcon label={FOLLOW_LINKS[0].label} className="h-3.5 w-3.5" />
             Follow
-          </Link>
+          </a>
           <ThemeToggle />
         </div>
       </nav>

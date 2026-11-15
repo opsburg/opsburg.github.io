@@ -121,17 +121,10 @@ export default function VibeCodingPage() {
             your templates, passes your checks, waits for the right approval and runs on your cloud, not on someone&apos;s
             laptop.
           </p>
-          <div className="flex flex-wrap justify-center gap-3 mt-8">
-            <a
-              href="#how"
-              className="px-5 py-2.5 rounded-md font-semibold brass-button hover:brightness-110"
-            >
-              How it works
-            </a>
-            <a href="#follow" className="px-5 py-2.5 rounded-md brass-border bg-sky-deep/40 hover:bg-brass/10">
-              Follow the journey
-            </a>
-          </div>
+          <FollowButtons className="mt-8" />
+          <a href="#how" className="inline-block mt-5 text-ink hover:text-cream underline underline-offset-4">
+            How it works
+          </a>
         </div>
         <div className="relative min-h-[340px] flex-1 md:min-h-[420px]">
           <WorkshopScene />

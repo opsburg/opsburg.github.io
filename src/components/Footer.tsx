@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { COOKIE_POLICY_URL, PRIVACY_POLICY_URL, SITE_NAME, SOCIAL_LINKS, TAGLINE } from "@/lib/site";
+import { SocialIcon } from "./FollowButtons";
 
 export default function Footer({ showBlog = false }: { showBlog?: boolean }) {
   return (
@@ -18,7 +19,8 @@ export default function Footer({ showBlog = false }: { showBlog?: boolean }) {
       </div>
       <nav aria-label="Opsburg on social media" className="max-w-6xl mx-auto px-4 pb-6 flex flex-wrap gap-5 text-sm text-ink">
         {SOCIAL_LINKS.map((s) => (
-          <a key={s.href} href={s.href} rel="me noopener" target="_blank" className="hover:text-cream">
+          <a key={s.href} href={s.href} rel="me noopener" target="_blank" className="inline-flex items-center gap-1.5 hover:text-cream">
+            <SocialIcon label={s.label} className="h-3.5 w-3.5" />
             {s.label}
           </a>
         ))}

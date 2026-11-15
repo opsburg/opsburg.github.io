@@ -50,17 +50,11 @@ export default function Home() {
               Keep your cloud <span className="brass-text">up and running</span>. Play it like a city.
             </h1>
             <p className="text-ink text-lg mt-6">{DESCRIPTION}</p>
-            <div className="flex flex-wrap gap-3 mt-8">
-              <a
-                href="#follow"
-                className="px-5 py-2.5 rounded-md font-semibold brass-button hover:brightness-110"
-              >
-                Follow the journey
-              </a>
-              <a href="#platform" className="px-5 py-2.5 rounded-md brass-border bg-sky-deep/40 hover:bg-brass/10">
-                See what it does
-              </a>
-            </div>
+            <p className="text-cream font-semibold mt-8">Follow the journey to the city, one episode a day:</p>
+            <FollowButtons align="start" className="mt-3" />
+            <a href="#platform" className="inline-block mt-5 text-ink hover:text-cream underline underline-offset-4">
+              See what it does
+            </a>
             <p className="text-sm text-ink/80 mt-4">In the workshop. Not playable yet.</p>
           </div>
         </div>
