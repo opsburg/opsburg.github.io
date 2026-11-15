@@ -28,6 +28,7 @@ Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and
 - `src/app/gamified-devops/page.tsx`: why gamified DevOps, with the streak scene (`src/components/StreakScene.tsx`)
 - `src/app/vibe-coding/page.tsx`: vibe coding for everyone, governed, with the workshop scene (`src/components/WorkshopScene.tsx`)
 - `src/app/faq/page.tsx`: FAQ
+- `src/app/not-found.tsx` (exported as `404.html`, served by GitHub Pages for any missing path), `src/app/error.tsx`, `src/app/global-error.tsx`: the error pages, on `src/components/ErrorScreen.tsx`
 - `src/components/HeroScene.tsx`: the 3D home hero; `src/components/scene/`: the pieces the page scenes share
 - `src/components/SkyCity.tsx`: the SVG city, used when WebGL is missing
 - `public/logo.png`, `src/app/icon.png`, `src/app/apple-icon.png`: the logo (generated with Gemini)
