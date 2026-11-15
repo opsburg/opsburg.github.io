@@ -1,14 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Cinzel, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { DESCRIPTION, GA_MEASUREMENT_ID, IUBENDA_WIDGET_URL, SITE_NAME, SITE_URL, TAGLINE, X_HANDLE } from "@/lib/site";
 import { hasPosts } from "@/lib/blog";
 
-// Self-hosted at build time: the browser never asks Google Fonts for them.
-const display = Cinzel({ subsets: ["latin"], weight: ["500", "700"], variable: "--font-cinzel", display: "swap" });
-const sans = Inter({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-inter", display: "swap" });
+// The font files live in the repository (src/app/fonts, latin subset, OFL licensed):
+// neither the visitor's browser nor the build ever asks Google Fonts for them.
+const display = localFont({
+  src: "./fonts/cinzel-latin.woff2",
+  weight: "500 700",
+  variable: "--font-cinzel",
+  display: "swap",
+});
+const sans = localFont({
+  src: "./fonts/inter-latin.woff2",
+  weight: "400 600",
+  variable: "--font-inter",
+  display: "swap",
+});
 
 /** gtag.js setup, run by iubenda only once the visitor accepts measurement (purpose 4). */
 const GA_INIT = `window.dataLayer = window.dataLayer || [];
