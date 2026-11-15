@@ -33,7 +33,7 @@ export default function ErrorScreen({
         {actions}
         <Link
           href="/"
-          className="px-5 py-2.5 rounded-md font-semibold text-sky-deep bg-gradient-to-r from-[#f1d27a] via-brass to-copper hover:brightness-110"
+          className="px-5 py-2.5 rounded-md font-semibold brass-button hover:brightness-110"
         >
           Back to the city
         </Link>
