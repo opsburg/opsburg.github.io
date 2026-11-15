@@ -33,3 +33,15 @@ minimumReleaseAgeExclude:
   - '@sanity/util@6.11.0'
   - '@sanity/vision@6.11.0'
   - sanity@6.11.0
+
+# Security floors for transitive dependencies that Sanity's tree pins to
+# vulnerable releases. Each one stays on the same major and only takes the fixed
+# patch; the deploy workflow's Trivy scan fails if a new one shows up. Drop an
+# entry once `pnpm why <name>` shows the fixed version without it.
+overrides:
+  'brace-expansion@5': '^5.0.11'
+  'dompurify@3': '^3.4.17'
+  'js-yaml@3': '^3.15.2'
+  'smol-toml@1': '^1.7.1'
+  'source-map-js@1': '^1.2.2'
+  'undici@7': '^7.30.1'
