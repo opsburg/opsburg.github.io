@@ -15,9 +15,10 @@ permissions:
   pages: write
   id-token: write
 
-# Every run rebuilds the whole site, so the newest run always wins.
+# Every deploy rebuilds the whole site, so the newest one always wins. Pull
+# requests only build, each in its own group, so they never cancel a deploy.
 concurrency:
-  group: "pages"
+  group: ${{ github.event_name == 'pull_request' && format('pages-pr-{0}', github.ref) || 'pages' }}
   cancel-in-progress: true
 
 jobs:
