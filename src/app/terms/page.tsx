@@ -14,8 +14,8 @@ export default function TermsPage() {
   return (
     <LegalPage title="Terms of use" path="/terms">
       <p>
-        These terms apply to your use of opsburg.dev (the &ldquo;site&rdquo;), run by {LEGAL.controller},{" "}
-        {LEGAL.address} (&ldquo;we&rdquo;, &ldquo;us&rdquo;). By using the site you accept them; if you do not, please
+        These terms apply to your use of opsburg.dev (the &ldquo;site&rdquo;), run by {LEGAL.controller}, a private individual based in Italy (&ldquo;we&rdquo;,
+        &ldquo;us&rdquo;), reachable at <a href={mail}>{LEGAL.email}</a>. By using the site you accept them; if you do not, please
         do not use it.
       </p>
 
