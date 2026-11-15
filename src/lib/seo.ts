@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DESCRIPTION, GITHUB_URL, SITE_NAME, SITE_URL } from "./site";
+import { DESCRIPTION, GITHUB_URL, SITE_NAME, SITE_URL, X_HANDLE } from "./site";
 
 export { GITHUB_URL, SITE_NAME, SITE_URL };
 
@@ -44,7 +44,7 @@ export function pageMetadata({ title, description, path, keywords = [], noindex 
       type: "website",
       images: [{ url: OG_IMAGE, width: 1280, height: 640, alt: SITE_NAME }],
     },
-    twitter: { card: "summary_large_image", title, description, images: [OG_IMAGE] },
+    twitter: { card: "summary_large_image", site: X_HANDLE, title, description, images: [OG_IMAGE] },
   };
 }
 

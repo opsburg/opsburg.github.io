@@ -3,7 +3,7 @@ import { Cinzel, Inter } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { DESCRIPTION, GA_MEASUREMENT_ID, IUBENDA_WIDGET_URL, SITE_NAME, SITE_URL, TAGLINE } from "@/lib/site";
+import { DESCRIPTION, GA_MEASUREMENT_ID, IUBENDA_WIDGET_URL, SITE_NAME, SITE_URL, TAGLINE, X_HANDLE } from "@/lib/site";
 import { hasPosts } from "@/lib/blog";
 
 // Self-hosted at build time: the browser never asks Google Fonts for them.
@@ -50,6 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
+    site: X_HANDLE,
     title: `${SITE_NAME} · ${TAGLINE}`,
     description: DESCRIPTION,
   },
